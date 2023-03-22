@@ -1,0 +1,100 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,600;1,700;1,800;1,900&display=swap');
+
+* {
+    font-family: 'Nunito Sans', sans-serif;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #E7E9EB;
+}
+
+
+.navbar {
+    display: flex;
+    position: relative;
+    justify-content: space-between;
+    align-items: center;
+    background-color: white;
+    box-shadow: 10px #000000;
+}
+
+.brand-title {
+    font-size: 1.5rem;
+    margin: .5rem;
+}
+
+.brand-title i {
+    margin: .5rem;
+}
+
+.navbar-links {
+    height: 100%;
+}
+
+.navbar-links ul {
+    display: flex;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar-links li {
+    list-style: none;
+}
+
+.navbar-links li a {
+    display: block;
+    text-decoration: none;
+    padding: 1rem;
+    color: black;
+}
+
+
+/*Main content*/
+.main-container {
+    margin: 25px 50px;
+    display: flex;
+}
+
+.categories {
+    background-color: white;
+    border-radius: 4px;
+    padding: 10px;
+    width: 25%;
+}
+
+.categories ul {
+    margin: 0 10px;
+    padding: 0;
+}
+
+.categories ul li {
+    list-style: none;
+    margin: 30px 0;
+}
+
+.categories ul li a {
+    text-decoration: none;
+    color: #000000;
+}
+
+.banner {
+    padding: 0;
+    margin-left: 20px;
+    width: 75%;
+}
+
+
+.banner img {
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    border-radius: 4px;
+    max-width: 100%;
+}
+
+
+.promoted {
+    background-color: white;
+}

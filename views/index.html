@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="/public/css/style.css">
+    <link rel="shortcut icon" href="/public/img/house-home-hut-svgrepo-com.svg" type="image/x-icon">
+    <title>Home</title>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="brand-title"><i class="fa-solid fa-house"></i>MyProperty</div>
+
+        <a href="#" class="toggle-button">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </a>
+
+        <div class="search-container">
+            <form action="/search-property" method="post">
+                <input type="text" name="searchproperty" placeholder="Search property...">
+                <button type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+            </form>
+        </div>
+
+        <div class="navbar-links">
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="main-container">
+        <div class="categories">
+            <h3>Categories</h3>
+            <ul>
+                <li><a href="#">Studio Apartments</a></li>
+                <li><a href="#">Single Rooms</a></li>
+                <li><a href="#">1,2,3 Bedrooms</a></li>
+                <li><a href="#">For Sale</a></li>
+            </ul>
+        </div>
+
+        <div class="banner">
+            <img src="/public/img/h1.jpg" alt="banner">
+        </div>
+
+        <div class="promoted">
+            <a href="#" class="card-house">
+                <img src="/public/img/hcon.jpg" alt="house image">
+                <h4>432 PARK AVENUE</h4>
+                <p>1 Bedroom</p>
+                <p>5th Broadway,New York</p>
+            </a>
+        </div>
+    </div>
+
+    <script src="/public/js/script.js"></script>
+</body>
+</html>
