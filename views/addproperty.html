@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="/public/css/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="shortcut icon" href="/public/img/house-home-hut-svgrepo-com.svg" type="image/x-icon">
+    <title>Home</title>
+</head>
+<body>
+
+  <div class="admin-panel">
+		<div class="menu-toggle">
+			<div class="hamburger">
+				<span></span>
+			</div>
+		</div>
+
+		<aside class="sidebar"> 
+			<a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+				<img src="/public/img/house-home-hut-svgrepo-com.svg" alt="logo" width="40" height="32">
+				<span class="fs-4">MyProperty</span>
+			</a>
+			<nav class="menu">
+				<a href="#" class="menu-item">           
+					 <i class="fa-solid fa-house"></i>
+					Home
+				</a>
+				<a href="#" class="menu-item">
+					<i class="fa-solid fa-plus"></i>
+					Add Property
+				</a>
+				<a href="#" class="menu-item">
+					<i class="fa-solid fa-pen-to-square"></i>
+              		Edit Property
+				</a>
+				<a href="#" class="menu-item">
+					<i class="fa-solid fa-trash"></i>
+                    Delete Property
+				</a>
+				<a href="#" class="menu-item">
+					<i class="fa-solid fa-users"></i>
+              		Customers
+				</a>
+				<div class="dropdown menu-item">
+					<a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+					  <i class="fa-solid fa-user rounded-circle me-2" width="32" height="32"></i>
+					  <strong>mdo</strong>
+					</a>
+					<ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
+					  <li><a class="dropdown-item" href="#">Settings</a></li>
+					  <li><a class="dropdown-item" href="#">Profile</a></li>
+					  <li><hr class="dropdown-divider"></li>
+					  <li><a class="dropdown-item" href="#">Sign out</a></li>
+					</ul>
+				</div>
+			</nav>
+
+		</aside>
+
+		<main class="content">
+			<h1>Welcome, Human</h1>
+			<p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Officia, explicabo!</p>
+
+			<div class="d-flex align-items-center justify-content-center">
+				<form action="/auth/login" method="post" class="border rounded p-3 col-6" enctype="multipart/form-data">
+					<div class="form-group my-4">
+						<label for="propertyname">Property Name</label>
+						<input type="text" class="form-control" id="propertyname" name="property_name" placeholder="Enter property name">
+					</div>
+          <div class="form-group my-4">
+						<label for="propertylocation">Property Location</label>
+						<input type="text" class="form-control" id="propertylocation" name="property_location" placeholder="Enter property location">
+					</div>
+          <div class="form-group my-4">
+						<label for="propertyprice">Property Price</label>
+						<input type="number" class="form-control" id="propertyprice" name="property_price" placeholder="Enter property price">
+					</div>
+          <div class="form-group my-4">
+						<label for="propertyimage">Main Property Image</label>
+						<input type="file" class="form-control" id="propertyimage" name="property_image" placeholder="Enter property image">
+					</div>
+          <div class="form-group my-4">
+						<label for="propertytype">Property Type</label>
+						<select class="form-select" aria-label="Default select example">
+              <option selected>Open this select menu</option>
+              <option value="1">One</option>
+              <option value="2">Two</option>
+              <option value="3">Three</option>
+            </select>
+					</div>
+          <div class="form-group my-4">
+						<label for="propertylocation">Property Location</label>
+						<input type="text" class="form-control" id="propertylocation" name="property_location" placeholder="Property location">
+					</div>
+
+          <div class="form-group my-4">
+						<label for="propertypurpose">Property Purpose</label>
+						<select class="form-select" aria-label="Default select example">
+              <option selected>Open this select menu</option>
+              <option value="1">One</option>
+              <option value="2">Two</option>
+              <option value="3">Three</option>
+            </select>
+					</div>
+
+          <div class="form-group my-4">
+						<label for="otherpropertyimages">Other Images</label>
+						<input type="file" class="form-control" id="otherpropertyimages" name="other_property_images" placeholder="Enter other property images">
+					</div>
+
+					<button type="submit" class="btn btn-primary my-2">Add Property</button>
+				</form>
+			</div>
+		</main>
+	</div>
+
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="/public/js/script.js"></script>
+</body>
+</html>
