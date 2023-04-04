@@ -1,0 +1,69 @@
+<aside class="sidebar">
+  <a
+    href="/admin"
+    class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none"
+  >
+    <img
+      src="/img/house-home-hut-svgrepo-com.svg"
+      alt="logo"
+      width="40"
+      height="32"
+    />
+    <span class="fs-4">MyProperty</span>
+  </a>
+  <nav class="menu">
+    <a href="/admin" class="menu-item">
+      <i class="fa-solid fa-house"></i>
+      Home
+    </a>
+    <a href="/admin/studioapartments" class="menu-item">
+      <i class="fa-solid fa-building"></i>
+      Studio Apartments
+    </a>
+    <a href="/admin/singlerooms" class="menu-item">
+      <i class="fa-solid fa-bed"></i>
+      Single Rooms
+    </a>
+    <a href="/admin/bedrooms" class="menu-item">
+      <i class="fa-solid fa-truck"></i>
+      1,2,3 Bedrooms
+    </a>
+    <a href="/admin/addproperty" class="menu-item">
+      <i class="fa-solid fa-plus"></i>
+      Add Property
+    </a>
+
+    <% if(currentUser){ %>
+      <div class="dropdown menu-item">
+        <a
+          href="#"
+          class="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
+          id="dropdownUser1"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
+          <i
+            class="fa-solid fa-user rounded-circle me-2"
+            width="32"
+            height="32"
+          ></i>
+          <strong><%= currentUser.username %></strong>
+        </a>
+        <ul
+          class="dropdown-menu dropdown-menu-dark text-small shadow"
+          aria-labelledby="dropdownUser1"
+        >
+          <li><a class="dropdown-item" href="#">Settings</a></li>
+          <li><a class="dropdown-item" href="#">Profile</a></li>
+          <li><hr class="dropdown-divider" /></li>
+          <li>
+            <form action="/logout?_method=DELETE" method="post">
+              <button class="dropdown-item" type="submit">Logout</button>
+            </form>          
+          </li>
+        </ul>
+      </div>
+    <% } %>
+    
+  </nav>
+</aside>

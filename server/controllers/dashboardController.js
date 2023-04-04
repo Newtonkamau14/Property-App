@@ -1,1 +1,0 @@
-const { sequelize, connection } = require('../../config/database');
