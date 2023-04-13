@@ -8,6 +8,8 @@ const methodOverride = require('method-override');
 const mongoose = require('mongoose');
 const MongoStore = require('connect-mongo')
 const PORT = process.env.PORT || 5000;
+const cors = require('cors');
+const flash = require('connect-flash');
 const app = express();
 require('./config/database');
 require('./config/passport.config');
@@ -17,18 +19,21 @@ require('./config/passport.config');
 //Middleware
 app.set('view engine','ejs');
 app.set('layout','layouts/layout');
-app.use(expressLayouts)
+app.use(expressLayouts);
+app.use(cors());
+app.use(flash());
 app.use(express.urlencoded({ extended: true}));
 app.use(express.json());
 app.use(express.static('public'));
 app.use(express.static('uploads'));
 app.use('/property',express.static('uploads'));
+app.use('/showproperty',express.static('uploads'));
 app.use('/admin',express.static('uploads'));
 app.use(methodOverride('_method'));
 app.use(session({
     resave: false,
     saveUninitialized: false,
-    store:  MongoStore.create({ mongoUrl: process.env.MONGOCOMPASS_URI, collectionName: 'sessions'}),
+    store:  MongoStore.create({ mongoUrl: process.env.MONGOATLAS_URI, collectionName: 'sessions'}),
     secret: process.env.SESSION_SECRET,
     cookie: {
         secure: false,
@@ -44,8 +49,8 @@ app.use(passport.session());
 
 app.use(function(req, res, next){
     res.locals.currentUser = req.user;
-    //res.locals.error = req.flash("error");
-    //res.locals.success = req.flash("success");
+    res.locals.error = req.flash("error");
+    res.locals.success = req.flash("success");
     next(); 
 });
 

@@ -4,49 +4,64 @@ require("../../config/passport.config");
 
 //Get Admin page
 exports.getAdminPanel = async (req, res) => {
-  let user = req.body.user;  
-  const properties = await Property.find({user:req.user.id});
-  res.render("adminpanel", {
-    title: "Admin Panel",
-    properties: properties,
-  });
+  try {
+    let user = req.body.user;
+    const properties = await Property.find();
+    res.render("adminpanel", {
+      layout: "layouts/adminlayout",
+      title: "Admin Panel",
+      properties: properties,
+    });
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 //Get Add property page
 exports.getAddPropertyPage = async (req, res) => {
   res.render("addproperty", {
+    layout: "layouts/adminlayout",
     title: "Add Property",
   });
 };
 
 //Get bedrooms
 exports.getBedroomAdmin = async (req, res) => {
-    let user = req.body.user;    
-    const bedrooms = await Property.find({ property_type: "1,2,3 Bedrooms"}).where({user:req.user.id});
-    res.render("adminbedrooms", {
-        title: "1,2,3 Bedrooms",
-        bedrooms: bedrooms,
-    });
+  let user = req.body.user;
+  const bedrooms = await Property.find({
+    property_type: "1,2,3 Bedrooms",
+  });
+  res.render("adminbedrooms", {
+    layout: "layouts/adminlayout",
+    title: "1,2,3 Bedrooms",
+    bedrooms: bedrooms,
+  });
 };
 
 //Get studio apartments
 exports.getStudioAdmin = async (req, res) => {
-    let user = req.body.user;    
-    const studioapt = await Property.find({ property_type: "Studio Apartments" }).where({user:req.user.id});
-    res.render("adminstudioapartments", {
-        title: "Studio Apartments",
-        studioapt: studioapt,
-    });
+  let user = req.body.user;
+  const studioapt = await Property.find({
+    property_type: "Studio Apartments",
+  });
+  res.render("adminstudioapartments", {
+    layout: "layouts/adminlayout",
+    title: "Studio Apartments",
+    studioapt: studioapt,
+  });
 };
 
 //Get single rooms
 exports.getSingleAdmin = async (req, res) => {
-    let user = req.body.user;    
-    const singlerms = await Property.find({ property_type: "Single Rooms"}).where({user:req.user.id});
-    res.render("adminsingleroom", {
-        title: "Single Rooms",
-        singlerms: singlerms,
-    });
+  let user = req.body.user;
+  const singlerms = await Property.find({
+    property_type: "Single Rooms",
+  });
+  res.render("adminsingleroom", {
+    layout: "layouts/adminlayout",
+    title: "Single Rooms",
+    singlerms: singlerms,
+  });
 };
 
 //Add Property
@@ -65,9 +80,14 @@ exports.addProperty = async (req, res) => {
     property = property.save();
     res.redirect("/admin");
   } catch (error) {
-    res.render("addproperty", {
-      title: "Add Property",
-    });
+    res.render(
+      "addproperty",
+
+      {
+        layout: "layouts/adminlayout",
+        title: "Add Property",
+      }
+    );
   }
 };
 
@@ -75,6 +95,7 @@ exports.addProperty = async (req, res) => {
 exports.getEditPropertyPage = async (req, res) => {
   const property = await Property.findById(req.params.id);
   res.render("editproperty", {
+    layout: "layouts/adminlayout",
     title: "Edit Property",
     property: property,
   });
@@ -99,10 +120,15 @@ exports.editProperty = async (req, res) => {
     if (property == null) {
       res.redirect("/admin/addproperty");
     } else {
-      res.render("editproperty", {
-        title: "Edit Property",
-        property: property,
-      });
+      res.render(
+        "editproperty",
+
+        {
+          layout: "layouts/adminlayout",
+          title: "Edit Property",
+          property: property,
+        }
+      );
     }
   }
 };
@@ -110,7 +136,7 @@ exports.editProperty = async (req, res) => {
 //Delete Property
 exports.deleteProperty = async (req, res) => {
   await Property.findByIdAndDelete(req.params.id);
-  res.redirect('/admin');
+  res.redirect("/admin");
 };
 
 //Search property
@@ -127,10 +153,15 @@ exports.searchProperty = async (req, res) => {
       if (err) {
         console.log(err);
       } else {
-        res.render("adminpanel", {
-          title: "Admin Panel",
-          properties: properties,
-        });
+        res.render(
+          "adminpanel",
+
+          {
+            layout: "layouts/adminlayout",
+            title: "Admin Panel",
+            properties: properties,
+          }
+        );
       }
     })
     .catch((error) => {

@@ -22,7 +22,13 @@ const userSchema = new Schema({
     }
 });
 
-userSchema.pre('save', async function(next) {                                                                                                                                        
+userSchema.pre('save', async function(next) { 
+    
+    //check if password is modified, else no need to do anything
+    if (!this.isModified('password')) {
+        return next()
+    }
+
     if(this.password) {                                                                                                                                                        
         var salt = await bcrypt.genSaltSync(10)                                                                                                                                     
         this.password  = await bcrypt.hashSync(this.password, salt)                                                                                                                

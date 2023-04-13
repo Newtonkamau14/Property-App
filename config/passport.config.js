@@ -18,7 +18,7 @@ passport.use(new LocalStrategy({ usernameField: 'email'},
               return done(null, false, { message: 'Incorrect password.' });
           }
 
-          return done(null, user); //When user is valid
+          return done(null, user,{ message: 'Login successfully'}); //When user is valid
       });
     }
 ));

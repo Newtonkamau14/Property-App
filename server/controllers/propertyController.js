@@ -3,6 +3,7 @@ const User = require("../models/user.model");
 
 //Get home page
 exports.getHomePage = async (req, res) => {
+  const property = await Property.findById(req.params.id);
   var number = await Property.count();
   const randproperties = await Property.aggregate([
     { $sample: { size: number } },
@@ -17,6 +18,7 @@ exports.getHomePage = async (req, res) => {
     studioapt: studioapt,
     singlerms: singlerms,
     bedrooms: bedrooms,
+    property: property
   });
 };
 
@@ -32,7 +34,7 @@ exports.getBedrooms = async (req, res) => {
 //Get single rooms
 exports.getSingleRoom = async (req, res) => {
   const singlerms = await Property.find({ property_type: "Single Rooms" });
-  res.render("simgleroom", {
+  res.render("singleroom", {
     title: "Single Rooms",
     singlerms: singlerms,
   });
@@ -48,13 +50,15 @@ exports.getStudioApartment = async (req, res) => {
 };
 
 //Show property
+
 exports.showProperty = async (req, res) => {
-  const property = await Property.findById(req.params.id);
+  const property = Property.findById(req.params.id);
   res.render("showproperty", {
     title: "Show Property",
     property: property,
   });
 };
+
 
 //Search property
 exports.userSearchProperty = async (req, res) => {

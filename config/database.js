@@ -3,7 +3,7 @@ const mongoose = require('mongoose')
 
 
 mongoose.set("strictQuery", false);
-mongoose.connect(process.env.MONGOCOMPASS_URI,{
+mongoose.connect(process.env.MONGOATLAS_URI,{
     useNewUrlParser: true,
     useUnifiedTopology: true
 }).then(() => {

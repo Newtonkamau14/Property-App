@@ -29,13 +29,13 @@
               <td><%= bedroom.property_purpose %></td>
               <td>
                 <a
-                  href="/admin/editproperty/<%= studio.id %>"
+                  href="/admin/editproperty/<%= bedroom.id %>"
                   class="btn btn-secondary"
                   >Edit
                   </a>
               </td>
               <td>
-                <form action="/admin/deleteproperty/<%= studio.id %>?_method=DELETE" method="post"><button class="btn btn-danger">Delete</button></form>
+                <form action="/admin/deleteproperty/<%= bedroom.id %>?_method=DELETE" method="post"><button class="btn btn-danger">Delete</button></form>
               </td>
             </tr>
             <% }) %>
