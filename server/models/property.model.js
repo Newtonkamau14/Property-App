@@ -1,49 +1,79 @@
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+const { sequelize } = require("../../config/database");
+const { Sequelize,DataTypes, UUID } = require("sequelize");
+const { User} = require('../models/user.model')
 
-const propertySchema = new mongoose.Schema({
-
-    property_id: {
-        type: Schema.ObjectId
+const Property = sequelize.define("Property", {
+  property_id: {
+    type: DataTypes.UUID,
+    defaultValue: DataTypes.UUIDV4,
+    primaryKey: true,
+    allowNull: false
+  },
+  property_name: {
+    type: DataTypes.STRING,
+    unique: true,
+    allowNull: false,
+  },
+  property_location: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  property_price: {
+    type: DataTypes.INTEGER.UNSIGNED,
+    allowNull: false,
+  },
+  /* property_image: {
+    type: DataTypes.BLOB,
+    allowNull: false,
+  }, */
+  property_type: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  property_purpose: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  availability: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: true
+  },
+  geometry: {
+    type: DataTypes.GEOMETRY('POINT',4326),
+    allowNull: false
+  },
+  /* other_property_images: {
+    type: DataTypes.BLOB,
+    get() {
+      return this.getDataValue("other_property_images").split(",");
     },
-    property_name: {
-        type: String,
-        unique: true,
-        required: true
+    set(img) {
+      this.setDataValue("other_property_images", img.join(","));
     },
-    property_location: {
-        type: String,
-        required: true
-    },
-    property_price: {
-        type: Number,
-        required: true
-    },
-    property_image: {
-        type: String,
-        required: true
-    },
-    property_listed_day: {
-        type: Date,
-        default: Date.now()
-    },
-    property_type: {
-        type: String,
-        required: true
-    },
-    property_purpose: {
-        type: String,
-        required: true
-    },
-    other_property_images: {
-        type: String,
-    },
-    admin: {
-        type: Schema.ObjectId,
-        ref: 'User'
+  }, */
+  slug: {
+    type: DataTypes.VIRTUAL,
+    get() {
+      return `${this.property_id.sp}`;
     }
-
+  }
 });
 
+Property.beforeSync(() => {
+  console.log("before creating property table");
+});
 
-module.exports = mongoose.model('Property',propertySchema)
+Property.afterSync(() => {
+  console.log("after creating property table");
+});
+
+User.hasMany(Property, {
+  foreignKey: {
+    name: 'user_id',
+    type: DataTypes.UUID
+  }
+});
+
+Property.belongsTo(User);
+
+module.exports = { Property };

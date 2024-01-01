@@ -5,15 +5,29 @@ const passport = require('passport');
 const session = require('express-session');
 const expressLayouts = require('express-ejs-layouts');
 const methodOverride = require('method-override');
-const mongoose = require('mongoose');
-const MongoStore = require('connect-mongo')
 const PORT = process.env.PORT || 5000;
 const cors = require('cors');
+const logger = require("morgan");
+const { sequelize } = require("./config/database");
 const flash = require('connect-flash');
+const SequelizeStore = require("connect-session-sequelize")(session.Store);
 const app = express();
+const adminRouter = require('./server/routes/admin');
+const authRouter = require('./server/routes/auth')
+const propertyRouter = require('./server/routes/property')
 require('./config/database');
-require('./config/passport.config');
+require('./config/passport');
 
+//Session Table
+const myStore = new SequelizeStore({
+    db: sequelize,
+    checkExpirationInterval: 15 * 60 * 1000,
+    expiration: 1000 * 60 * 60 * 24 * 28 * 12,
+  });
+  
+  myStore.sync(() => {
+    console.log("Session table created");
+  });
 
 
 //Middleware
@@ -22,6 +36,7 @@ app.set('layout','layouts/layout');
 app.use(expressLayouts);
 app.use(cors());
 app.use(flash());
+app.use(logger("dev"));
 app.use(express.urlencoded({ extended: true}));
 app.use(express.json());
 app.use(express.static('public'));
@@ -33,12 +48,12 @@ app.use(methodOverride('_method'));
 app.use(session({
     resave: false,
     saveUninitialized: false,
-    store:  MongoStore.create({ mongoUrl: process.env.MONGOATLAS_URI, collectionName: 'sessions'}),
+    store:  myStore,
     secret: process.env.SESSION_SECRET,
     cookie: {
         secure: false,
         httpOnly: false,
-        maxAge: 1000 * 60 * 60 * 24 * 365,
+        maxAge: 1000 * 60 * 60 * 24 * 28 * 3,
     }
 }));
 
@@ -59,16 +74,8 @@ app.use(function(req, res, next){
 //Routes
 app.use('',require('./server/routes/auth'));
 app.use('',require('./server/routes/property'));
-app.use('',require('./server/routes/admin'));
+app.use('/admin',adminRouter);
 
-
-//Logout
-app.delete('/logout', function(req, res, next) {
-    req.logout(function(err) {
-      if (err) { return next(err); }
-      res.redirect('/auth/admin/login');
-    });
-});
 
 
 app.listen(PORT,async () => {

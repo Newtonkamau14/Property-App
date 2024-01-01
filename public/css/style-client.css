@@ -1,163 +1,158 @@
 * {
-    @font-face {
-        font-family: 'Nunito Sans', sans-serif;
-        src: url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,600;1,700;1,800;1,900&display=swap');
-    }
+  @font-face {
+    font-family: "Nunito Sans", sans-serif;
+    src: url("https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,600;1,700;1,800;1,900&display=swap");
+  }
 }
 
 body {
-    margin: 0;
-    padding: 0;
-    background-color: #E7E9EB;
+  margin: 0;
+  padding: 0;
+  background-color: #e7e9eb;
 }
 
-
 .navbar i {
-    color: #4296FF; 
+  color: #4296ff;
 }
 
 .brand-title {
-    font-size: 1.5rem;
-    margin: .5rem;
+  font-size: 1.5rem;
+  margin: 0.5rem;
 }
 
 .brand-title i {
-    margin: .5rem;
+  margin: 0.5rem;
 }
-
-
-
 
 /*Main content*/
 .main-container {
-    margin: 25px 50px;
+  margin: 25px 50px;
 }
 
 .header-banner {
-    display: flex;
+  display: flex;
 }
 
 .categories {
-    background-color: white;
-    border-radius: 4px;
-    padding: 10px;
-    width: 25%;
+  background-color: white;
+  border-radius: 4px;
+  padding: 10px;
+  width: 25%;
 }
 
 .categories ul {
-    margin: 0 10px;
-    padding: 0;
+  margin: 0 10px;
+  padding: 0;
 }
 
 .categories i {
-    color: #4296FF;
+  color: #4296ff;
 }
 
 .categories ul li {
-    list-style: none;
-    margin: 30px 0;
+  list-style: none;
+  margin: 30px 0;
 }
 
 .categories ul li a {
-    text-decoration: none;
-    color: #000000;
+  text-decoration: none;
+  color: #000000;
 }
 
 .banner {
-    padding: 0;
-    margin-left: 20px;
-    width: 75%;
+  padding: 0;
+  margin-left: 20px;
+  width: 75%;
 }
-
 
 .banner img {
-    background-position: center;
-    background-attachment: fixed;
-    background-repeat: no-repeat;
-    border-radius: 4px;
-    max-width: 100%;
+  background-position: center;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  border-radius: 4px;
+  max-width: 100%;
 }
 
-
 .house-type-title {
-    padding: 5px;
-    margin: 30px 0;
+  padding: 5px;
+  margin: 30px 0;
 }
 
 .house-type-group {
-    background-color: white;
-    border-radius: 4px;
+  background-color: white;
+  border-radius: 4px;
 }
 
-
 .card-house {
-    text-decoration: none;
-    color: black;
-    margin: 10px 5px;
-    border-radius: 4px;
+  text-decoration: none;
+  color: black;
+  margin: 10px 5px;
+  border-radius: 4px;
 }
 
 .card-house:hover {
-    box-shadow: 0 0 10px rgb(137, 142, 148); 
+  box-shadow: 0 0 10px rgb(137, 142, 148);
 }
 
 .card-house img {
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    max-width: 100%;
-    border-radius: 4px;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  max-width: 100%;
+  border-radius: 4px;
 }
 
-.card-house h4,p {
-    padding: 0 10px;
+.card-house h4,
+p {
+  padding: 0 10px;
 }
 
 .card-house-location {
-    font-weight: 200;
+  font-weight: 200;
 }
 
 .card-house-price {
-    color: coral;
+  color: coral;
 }
 
-
 .login {
-    max-width: 20%;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 100px;
- }
- 
- .login div {
-     margin: 15px 0;
- }
- 
- .login div label{
-     display: block;
-     margin-bottom: 4px;
- }
- 
- .login input {
-     border: 1px solid gray;
-     border-radius: 4px;
-     width: 100%;
-     height: 30px;
- }
- 
- .login button {
-     color: white;
-     background-color: #1A73E8;
-     border: none;
-     border-radius: 5px;
-     padding: 10px 20px;
-     font-size: medium;
-     margin-right: 10px;
-     cursor: pointer;
- }
+  max-width: 20%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 100px;
+}
 
+.login div {
+  margin: 15px 0;
+}
 
+.login div label {
+  display: block;
+  margin-bottom: 4px;
+}
 
+.login input {
+  border: 1px solid gray;
+  border-radius: 4px;
+  width: 100%;
+  height: 30px;
+}
 
-.footer i{
-    color: #4296FF;
+.login button {
+  color: white;
+  background-color: #1a73e8;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-size: medium;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+/* Maybe change to 400px */
+#map {
+  height: 400px;
+}
+
+.footer i {
+  color: #4296ff;
 }

@@ -11,7 +11,7 @@
                     <h4 class="card-title"><%= property.property_name %></h4>
                     <p class="card-text"><%= property.property_type %></p>
                     <p class="card-house-location"><%= property.property_location %></p>
-                    <p class="card-house-price">Ksh <%= property.property_price %></p>
+                    <p class="card-house-price">Ksh <%= property.property_price.toLocaleString("en-UK") %></p>
                     </div>
                 </a>
             </div>

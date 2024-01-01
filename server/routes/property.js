@@ -12,9 +12,9 @@ router.route('/property/singlerooms').get(propertyController.getSingleRoom);
 
 router.route('/property/studioapartments').get(propertyController.getStudioApartment);
 
-router.route('/showproperty/:id').get(propertyController.showProperty);
+router.route('/showproperty/:property_id').get(propertyController.showProperty);
 
-router.route('search-property').get(propertyController.userSearchProperty);
+router.route('/search-property').get(propertyController.userSearchProperty);
 
 
 

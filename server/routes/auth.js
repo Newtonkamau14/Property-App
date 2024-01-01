@@ -2,33 +2,32 @@ const express = require("express");
 const router = express.Router();
 const authController = require("../controllers/authController");
 const passport = require("passport");
-require('../../config/passport.config');
+const { checkAuthenticationAdmin } = require("../../middleware/middleware");
+require("../../config/passport");
 
-
-function checkNotAuthenticated(req,res, next) {
-  if(req.isAuthenticated()) {
-      return res.redirect('/admin')
-  }
-  next()
-}
 
 //Admin
 router
-  .route('/auth/admin/login')
-  .get(checkNotAuthenticated,authController.getAdminLoginPage)
+  .route("/auth/admin/login")
+  .get(checkAuthenticationAdmin, authController.getAdminLoginPage)
   .post(
-    checkNotAuthenticated,
-    passport.authenticate('local', {
-      successRedirect: '/admin',
-      failureRedirect: '/auth/admin/login',
-    }),
+    checkAuthenticationAdmin,
+    passport.authenticate("login", {
+      successRedirect: "/admin",
+      failureRedirect: "/auth/admin/login",
+    })
   );
 
 router
-  .route('/auth/admin/signup')
-  .get(checkNotAuthenticated,authController.getAdminSignUpPage)
-  .post(checkNotAuthenticated,authController.createAdmin);
+  .route("/auth/admin/signup")
+  .get(checkAuthenticationAdmin, authController.getAdminSignUpPage)
+  .post(
+    passport.authenticate("signup-admin", {
+      successRedirect: "/admin",
+      failureRedirect: "/auth/admin/signup",
+    })
+  );
 
-
+router.route("/logout").get(authController.logOutAdmin);
 
 module.exports = router;

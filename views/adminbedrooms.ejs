@@ -24,18 +24,18 @@
             <tr>
               <td><%= bedroom.property_name %></td>
               <td><%= bedroom.property_location %></td>
-              <td><%= bedroom.property_price %></td>
+              <td><%= bedroom.property_price.toLocaleString("en-UK") %></td>
               <td><%= bedroom.property_type %></td>
               <td><%= bedroom.property_purpose %></td>
               <td>
                 <a
-                  href="/admin/editproperty/<%= bedroom.id %>"
+                  href="/admin/editproperty/<%= bedroom.property_id %>"
                   class="btn btn-secondary"
                   >Edit
                   </a>
               </td>
               <td>
-                <form action="/admin/deleteproperty/<%= bedroom.id %>?_method=DELETE" method="post"><button class="btn btn-danger">Delete</button></form>
+                <form action="/admin/deleteproperty/<%= bedroom.property_id %>?_method=DELETE" method="post"><button class="btn btn-danger">Delete</button></form>
               </td>
             </tr>
             <% }) %>

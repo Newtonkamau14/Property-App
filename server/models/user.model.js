@@ -1,40 +1,42 @@
-const mongoose = require('mongoose');
-const bcrypt = require('bcrypt');
-const Schema = mongoose.Schema;
+const { sequelize } = require("../../config/database");
+const { DataTypes } = require("sequelize");
 
-const userSchema = new Schema({
-    username: {
-        type: String,
-        unique: true
-    },
-    email: {
-        type: String,
-        unique: true,
-        required: true
-    },
-    password: {
-        type: String,
-        required: true
-    },
-    createdAt: {
-        type: Date,
-        default: Date.now
-    }
+const User = sequelize.define("User", {
+  user_id: {
+    type: DataTypes.UUID,
+    defaultValue: DataTypes.UUIDV4,
+    primaryKey: true,
+    allowNull: false
+  },
+  username: {
+    type: DataTypes.STRING,
+    unique: true,
+  },
+  email: {
+    type: DataTypes.STRING,
+    unique: true,
+    allowNull: false,
+  },
+  role: {
+    type: DataTypes.STRING,
+    defaultValue: "ADMIN",
+    values: ["ADMIN", "USER"],
+  },
+  password: {
+    type: DataTypes.STRING,
+    unique: true,
+    allowNull: false,
+  },
 });
 
-userSchema.pre('save', async function(next) { 
-    
-    //check if password is modified, else no need to do anything
-    if (!this.isModified('password')) {
-        return next()
-    }
+User.beforeSync(() => {
+  console.log("before creating user table");
+});
 
-    if(this.password) {                                                                                                                                                        
-        var salt = await bcrypt.genSaltSync(10)                                                                                                                                     
-        this.password  = await bcrypt.hashSync(this.password, salt)                                                                                                                
-    }                                                                                                                                                                          
-    next()                                                                                                                                                                     
-})   
+User.afterSync(() => {
+  console.log("after creating user table");
+});
 
 
-module.exports = mongoose.model('User',userSchema)
+
+module.exports = { User };

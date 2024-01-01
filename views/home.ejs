@@ -30,13 +30,13 @@
         <% if(randproperties){ %> 
             <% randproperties.forEach((property) => { %>
             <div class="col">
-                <a href="/showproperty/<%= property.id %>" class="card h-100 card-house">
+                <a href="/showproperty/<%= property.property_id %>" class="card h-100 card-house">
                     <img src="<%= property.property_image %>" alt="house image" />
                     <div class="card-body">
                     <h4 class="card-title"><%= property.property_name %></h4>
                     <p class="card-text"><%= property.property_type %></p>
                     <p class="card-house-location"><%= property.property_location %></p>
-                    <p class="card-house-price">Ksh <%= property.property_price %></p>
+                    <p class="card-house-price">Ksh <%= property.property_price.toLocaleString("en-UK") %></p>
                     </div>
                 </a>
             </div>
@@ -50,13 +50,13 @@
         <h3 class="house-type-title"><%= property.property_type %></h3>
         <div class="row row-cols-3 row-cols-md-4 g-4">
             <div class="col">
-                <a href="/showproperty/<%= property.id %>" class="card h-100 card-house">
+                <a href="/showproperty/<%= property.property_id %>" class="card h-100 card-house">
                     <img src="<%= property.property_image %>" alt="house image" />
                     <div class="card-body">
                     <h4 class="card-title"><%= property.property_name %></h4>
                     <p class="card-text"><%= property.property_type %></p>
                     <p class="card-house-location"><%= property.property_location %></p>
-                    <p class="card-house-price">Ksh <%= property.property_price %></p>
+                    <p class="card-house-price">Ksh <%= property.property_price.toLocaleString("en-UK") %></p>
                     </div>
                 </a>
             </div>
@@ -70,13 +70,13 @@
         <h3 class="house-type-title"><%= property.property_type %></h3>
         <div class="row row-cols-3 row-cols-md-4 g-4">
             <div class="col">
-            <a href="/showproperty/<%= property.id %>" class="card h-100 card-house">
+            <a href="/showproperty/<%= property.property_id %>" class="card h-100 card-house">
                 <img src="<%= property.property_image %>" alt="house image" />
                 <div class="card-body">
                 <h4 class="card-title"><%= property.property_name %></h4>
                 <p class="card-text"><%= property.property_type %></p>
                 <p class="card-house-location"><%= property.property_location %></p>
-                <p class="card-house-price">Ksh <%= property.property_price %></p>
+                <p class="card-house-price">Ksh <%= property.property_price.toLocaleString("en-UK") %></p>
                 </div>
             </a>
             </div>
@@ -90,13 +90,13 @@
             <h3 class="house-type-title"><%= property.property_type %></h3>
             <div class="row row-cols-3 row-cols-md-4 g-4">
                 <div class="col">
-                <a href="/showproperty/<%= property.id %>" class="card h-100 card-house">
+                <a href="/showproperty/<%= property.property_id %>" class="card h-100 card-house">
                     <img src="<%= property.property_image %>" alt="house image" />
                     <div class="card-body">
                     <h4 class="card-title"><%= property.property_name %></h4>
                     <p class="card-text"><%= property.property_type %></p>
                     <p class="card-house-location"><%= property.property_location %></p>
-                    <p class="card-house-price">Ksh <%= property.property_price %></p>
+                    <p class="card-house-price">Ksh <%= property.property_price.toLocaleString("en-UK") %></p>
                     </div>
                 </a>
                 </div>
