@@ -1,20 +1,21 @@
 //Get Admin Login Page
-exports.getAdminLoginPage = async (req, res) => {
+const getAdminLoginPage = async (req, res) => {
   res.render("loginadmin", {
     title: "Admin Login",
   });
 };
 
 //Get Admin SignUp Page
-exports.getAdminSignUpPage = async (req, res) => {
+const getAdminSignUpPage = async (req, res) => {
   res.render("signupadmin", {
     title: "Admin Sign Up",
   });
 };
 
+const logOutAdmin = (req, res) => {
+  req.session.destroy(function (err) {
+    res.redirect("/auth/admin/login");
+  });
+};
 
-exports.logOutAdmin = (req,res) => {
-  req.session.destroy(function(err){
-    res.redirect("/auth/admin/login")
-  })
-}
+module.exports = { getAdminLoginPage, getAdminSignUpPage, logOutAdmin };

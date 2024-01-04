@@ -3,7 +3,7 @@ const { Sequelize, Op } = require("sequelize");
 const User = require("../models/user.model");
 
 //Get home page
-exports.getHomePage = async (req, res) => {
+const getHomePage = async (req, res) => {
   try {
     const randproperties = await Property.findAll({
       attributes: [
@@ -81,7 +81,7 @@ exports.getHomePage = async (req, res) => {
 };
 
 //Get bedrooms
-exports.getBedrooms = async (req, res) => {
+const getBedrooms = async (req, res) => {
   try {
     const bedrooms = await Property.findAll({
       attributes: [
@@ -111,7 +111,7 @@ exports.getBedrooms = async (req, res) => {
 };
 
 //Get single rooms
-exports.getSingleRoom = async (req, res) => {
+const getSingleRoom = async (req, res) => {
   try {
     const singlerms = await Property.findAll({
       attributes: [
@@ -142,7 +142,7 @@ exports.getSingleRoom = async (req, res) => {
 };
 
 //Get studio
-exports.getStudioApartment = async (req, res) => {
+const getStudioApartment = async (req, res) => {
   try {
     const studioapt = await Property.findAll({
       attributes: [
@@ -174,7 +174,7 @@ exports.getStudioApartment = async (req, res) => {
 
 //Show property
 
-exports.showProperty = async (req, res) => {
+const showProperty = async (req, res) => {
   const property = await Property.findOne({
     attributes: [
       "property_id",
@@ -190,8 +190,8 @@ exports.showProperty = async (req, res) => {
       property_id: req.params.property_id,
     },
   });
-  
-/*   // Define tile URL template
+
+  /*   // Define tile URL template
   const urlTemplate = "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
 
   // Create the tile layer object
@@ -212,11 +212,10 @@ exports.showProperty = async (req, res) => {
     title: "Show Property",
     property: property,
   });
-  
 };
 
 //Search property
-exports.userSearchProperty = async (req, res) => {
+const userSearchProperty = async (req, res) => {
   let searchQuery = req.query.searchproperty;
 
   try {
@@ -273,4 +272,13 @@ exports.userSearchProperty = async (req, res) => {
   } catch (error) {
     res.status(500).json({ message: "Internal server error" });
   }
+};
+
+module.exports = {
+  getHomePage,
+  getBedrooms,
+  getSingleRoom,
+  getStudioApartment,
+  showProperty,
+  userSearchProperty,
 };

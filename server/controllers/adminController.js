@@ -2,6 +2,7 @@ const { Op } = require("sequelize");
 const Property = require("../models/property.model").Property;
 const { Storage } = require("@google-cloud/storage");
 const path = require("path");
+const { format } = require("util");
 
 const gc = new Storage({
   projectId: "property-app-382708",
@@ -14,7 +15,7 @@ const gc = new Storage({
 const propertyAppBucket = gc.bucket("property_app");
 
 //Get Admin page
-exports.getAdminPanel = async (req, res) => {
+const getAdminPanel = async (req, res) => {
   try {
     const properties = await Property.findAll();
 
@@ -32,7 +33,7 @@ exports.getAdminPanel = async (req, res) => {
 };
 
 //Get Add property page
-exports.getAddPropertyPage = async (req, res) => {
+const getAddPropertyPage = async (req, res) => {
   res.render("addproperty", {
     layout: "layouts/adminlayout",
     title: "Add Property",
@@ -40,7 +41,7 @@ exports.getAddPropertyPage = async (req, res) => {
 };
 
 //Get bedrooms
-exports.getBedroomAdmin = async (req, res) => {
+const getBedroomAdmin = async (req, res) => {
   try {
     const bedrooms = await Property.findAll({
       where: {
@@ -61,7 +62,7 @@ exports.getBedroomAdmin = async (req, res) => {
 };
 
 //Get studio apartments
-exports.getStudioAdmin = async (req, res) => {
+const getStudioAdmin = async (req, res) => {
   try {
     const studioapt = await Property.findAll({
       where: {
@@ -83,7 +84,7 @@ exports.getStudioAdmin = async (req, res) => {
 };
 
 //Get single rooms
-exports.getSingleAdmin = async (req, res) => {
+const getSingleAdmin = async (req, res) => {
   try {
     const singlerms = await Property.findAll({
       where: {
@@ -105,78 +106,92 @@ exports.getSingleAdmin = async (req, res) => {
 };
 
 //Add Property
-exports.addProperty = async (req, res, next) => {
+const addProperty = async (req, res, next) => {
   try {
-    //validate property fields if empty
+    // Validate property fields if empty
     if (
       !req.body.property_name ||
       !req.body.property_location ||
       !req.body.property_type ||
-      !req.body.property_purpose
+      !req.body.property_purpose ||
+      !req.file
     ) {
-      res.status(400).json({ message: "Missing required fileds in the form" });
-      return;
+      return res
+        .status(400)
+        .json({ message: "Missing required fields in the form" });
     }
 
-    let long = req.body.longitude;
-    let lat = req.body.latitude;
-    let formattedPrice = req.body.property_price;
-    let KeShilling = new Intl.NumberFormat("en-UK", {
-      style: "currency",
-      currency: "KES",
-    });
-
-    KeShilling.format(formattedPrice);
-    const point = {
-      type: "Point",
-      coordinates: [long, lat],
-    };
-
-    //check if property exists
-    const [property, propertyCreated] = await Property.findOrCreate({
-      where: {
-        property_name: req.body.property_name,
-      },
-      defaults: {
-        property_name: req.body.property_name,
-        property_location: req.body.property_location,
-        property_price: formattedPrice,
-        property_image: req.file.filename,
-        property_type: req.body.property_type,
-        property_purpose: req.body.property_purpose,
-        geometry: point,
-      },
-    });
-    /* const blob = propertyAppBucket.file(req.file.originalname);
+    const blob = propertyAppBucket.file(req.file.originalname);
     const blobStream = blob.createWriteStream();
 
     blobStream.on("error", (err) => {
       next(err);
     });
 
-    blobStream.on("finish", () => {
-      res.status(200);
-      console.log("success");
+    blobStream.on("finish", async () => {
+      try {
+        const publicUrl = format(
+          `https://storage.googleapis.com/${propertyAppBucket.name}/${blob.name}`
+        );
+
+        let formattedPrice = req.body.property_price;
+        let KeShilling = new Intl.NumberFormat("en-UK", {
+          style: "currency",
+          currency: "KES",
+        });
+
+        KeShilling.format(formattedPrice);
+
+        const point = {
+          type: "Point",
+          coordinates: [
+            parseFloat(req.body.longitude),
+            parseFloat(req.body.latitude),
+          ],
+        };
+
+        // Check if property exists
+        const property = await Property.findOne({
+          where: {
+            property_name: req.body.property_name,
+          },
+        });
+
+        if (property) {
+          return res.status(400).json({ message: "Property already exists." });
+        }
+
+        // Create the property
+        const newProperty = await Property.create({
+          property_name: req.body.property_name,
+          property_location: req.body.property_location,
+          property_price: formattedPrice,
+          property_image: publicUrl,
+          property_type: req.body.property_type,
+          property_purpose: req.body.property_purpose,
+          geometry: point,
+          user_id: req.user.user_id,
+        });
+
+        res.status(201).redirect("/admin");
+      } catch (error) {
+        console.error("Error creating property:", error);
+        next(error);
+      }
     });
 
     blobStream.end(req.file.buffer);
- */
-    if (!propertyCreated) {
-      return res.status(400).json({ message: "Property already exists." });
-    }
-    res.status(201).redirect("/admin");
   } catch (error) {
-    res.status(500);
-    /* res.render("addproperty", {
+    console.error("Error during file upload:", error);
+    res.status(500).render("addproperty", {
       layout: "layouts/adminlayout",
       title: "Add Property",
-    }); */
-    console.log(error);
+    });
   }
 };
 
 //Get Edit Page
-exports.getEditPropertyPage = async (req, res) => {
+const getEditPropertyPage = async (req, res) => {
   try {
     const property = await Property.findByPk(req.params.property_id);
     res.render("editproperty", {
@@ -190,7 +205,7 @@ exports.getEditPropertyPage = async (req, res) => {
 };
 
 //Edit Property
-exports.editProperty = async (req, res) => {
+const editProperty = async (req, res) => {
   try {
     const updatedProperty = await Property.update(
       {
@@ -216,7 +231,7 @@ exports.editProperty = async (req, res) => {
 };
 
 //Delete Property
-exports.deleteProperty = async (req, res) => {
+const deleteProperty = async (req, res) => {
   try {
     const deletedCount = await Property.destroy({
       where: {
@@ -235,7 +250,7 @@ exports.deleteProperty = async (req, res) => {
 };
 
 //Search property
-exports.searchProperty = async (req, res) => {
+const searchProperty = async (req, res) => {
   let searchQuery = req.query.search;
 
   try {
@@ -296,4 +311,19 @@ exports.searchProperty = async (req, res) => {
   } catch (error) {
     res.status(500).json({ message: "Internal server error" });
   }
+};
+
+module.exports = {
+  gc,
+  propertyAppBucket,
+  getAdminPanel,
+  getAddPropertyPage,
+  getBedroomAdmin,
+  getStudioAdmin,
+  getSingleAdmin,
+  addProperty,
+  getEditPropertyPage,
+  editProperty,
+  deleteProperty,
+  searchProperty,
 };

@@ -1,13 +1,13 @@
 const { sequelize } = require("../../config/database");
-const { Sequelize,DataTypes, UUID } = require("sequelize");
-const { User} = require('../models/user.model')
+const { Sequelize, DataTypes, UUID } = require("sequelize");
+const { User } = require("../models/user.model");
 
 const Property = sequelize.define("Property", {
   property_id: {
     type: DataTypes.UUID,
     defaultValue: DataTypes.UUIDV4,
     primaryKey: true,
-    allowNull: false
+    allowNull: false,
   },
   property_name: {
     type: DataTypes.STRING,
@@ -22,10 +22,10 @@ const Property = sequelize.define("Property", {
     type: DataTypes.INTEGER.UNSIGNED,
     allowNull: false,
   },
-  /* property_image: {
-    type: DataTypes.BLOB,
+  property_image: {
+    type: DataTypes.STRING,
     allowNull: false,
-  }, */
+  },
   property_type: {
     type: DataTypes.STRING,
     allowNull: false,
@@ -36,11 +36,11 @@ const Property = sequelize.define("Property", {
   },
   availability: {
     type: DataTypes.BOOLEAN,
-    defaultValue: true
+    defaultValue: true,
   },
   geometry: {
-    type: DataTypes.GEOMETRY('POINT',4326),
-    allowNull: false
+    type: DataTypes.GEOMETRY("POINT", 4326),
+    allowNull: false,
   },
   /* other_property_images: {
     type: DataTypes.BLOB,
@@ -51,12 +51,12 @@ const Property = sequelize.define("Property", {
       this.setDataValue("other_property_images", img.join(","));
     },
   }, */
-  slug: {
+  /* slug: {
     type: DataTypes.VIRTUAL,
-    get() {
-      return `${this.property_id.sp}`;
+    get(){
+      return `${this.property_name}${this.property_id}`
     }
-  }
+  }, */
 });
 
 Property.beforeSync(() => {
@@ -69,11 +69,10 @@ Property.afterSync(() => {
 
 User.hasMany(Property, {
   foreignKey: {
-    name: 'user_id',
-    type: DataTypes.UUID
-  }
+    name: "user_id",
+    type: DataTypes.UUID,
+    allowNull: false
+  },
 });
-
-Property.belongsTo(User);
 
 module.exports = { Property };
