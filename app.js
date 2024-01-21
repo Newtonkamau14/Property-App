@@ -8,15 +8,15 @@ const methodOverride = require('method-override');
 const PORT = process.env.PORT || 5000;
 const cors = require('cors');
 const logger = require("morgan");
-const { sequelize } = require("./config/database");
+const { sequelize } = require("./server/config/database");
 const flash = require('connect-flash');
 const SequelizeStore = require("connect-session-sequelize")(session.Store);
 const app = express();
 const adminRouter = require('./server/routes/admin');
 const authRouter = require('./server/routes/auth')
 const propertyRouter = require('./server/routes/property')
-require('./config/database');
-require('./config/passport');
+require('./server/config/database');
+require('./server/config/passport');
 
 //Session Table
 const myStore = new SequelizeStore({
@@ -52,7 +52,7 @@ app.use(session({
     secret: process.env.SESSION_SECRET,
     cookie: {
         secure: false,
-        httpOnly: false,
+        httpOnly: true,
         maxAge: 1000 * 60 * 60 * 24 * 28 * 3,
     }
 }));

@@ -2,16 +2,16 @@ const express = require("express");
 const router = express.Router();
 const authController = require("../controllers/authController");
 const passport = require("passport");
-const { checkAuthenticationAdmin } = require("../../middleware/middleware");
-require("../../config/passport");
+const { checkNotAuthenticatedAdmin } = require("../middleware/middleware");
+require("../config/passport");
 
 
 //Admin
 router
   .route("/auth/admin/login")
-  .get(checkAuthenticationAdmin, authController.getAdminLoginPage)
+  .get(checkNotAuthenticatedAdmin, authController.getAdminLoginPage)
   .post(
-    checkAuthenticationAdmin,
+    checkNotAuthenticatedAdmin,
     passport.authenticate("login", {
       successRedirect: "/admin",
       failureRedirect: "/auth/admin/login",
@@ -20,7 +20,7 @@ router
 
 router
   .route("/auth/admin/signup")
-  .get(checkAuthenticationAdmin, authController.getAdminSignUpPage)
+  .get(checkNotAuthenticatedAdmin, authController.getAdminSignUpPage)
   .post(
     passport.authenticate("signup-admin", {
       successRedirect: "/admin",
