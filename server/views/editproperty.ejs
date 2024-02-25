@@ -1,0 +1,72 @@
+<div class="admin-panel">
+  <div class="menu-toggle">
+    <div class="hamburger">
+      <span></span>
+    </div>
+  </div>
+  <%- include('./partials/sidebar') %>
+  <main class="content">
+    <h1>Edit Property</h1>
+    <div class="d-flex align-items-center justify-content-center">
+      <form
+        action="/admin/editproperty/<%= property.property_id %>"
+        method="post"
+        class="border rounded p-3 col-6"
+        enctype="multipart/form-data"
+      >
+        <div class="form-group my-4">
+          <label for="propertyname">Property Name</label>
+          <input
+            type="text"
+            class="form-control"
+            id="propertyname"
+            name="property_name"
+            placeholder="Enter property name"
+            value="<%= property.property_name %>"
+          />
+        </div>
+        <div class="form-group my-4">
+          <label for="propertylocation">Property Location</label>
+          <input
+            type="text"
+            class="form-control"
+            id="propertylocation"
+            name="property_location"
+            placeholder="Enter property location"
+            value="<%= property.property_location %>"
+          />
+        </div>
+        <div class="form-group my-4">
+          <label for="propertyprice">Property Price</label>
+          <input
+            type="text"
+            class="form-control"
+            id="propertyprice"
+            name="property_price"
+            placeholder="Enter property price"
+            value="<%= property.property_price %>"
+          />
+        </div>
+        
+        <div class="form-group my-4">
+          <label for="propertytype">Property Type</label>
+          <select class="form-select" aria-label="Default select example" name="property_type">
+            <option selected><%= property.property_type %></option>
+            <option value="Studio Apartments">Studio Apartments</option>
+            <option value="Single Rooms">Single Rooms</option>
+            <option value="1,2,3 Bedrooms">1,2,3 Bedrooms</option>
+          </select>
+        </div>
+        <div class="form-group my-4">
+          <label for="propertypurpose">Property Purpose</label>
+          <select class="form-select" aria-label="Default select example" name="property_purpose">
+            <option selected><%= property.property_purpose %></option>
+            <option value="For sale">For sale</option>
+            <option value="Rent">Rent</option>
+          </select>
+        </div>
+        <button type="submit" class="btn btn-primary my-2">Save Property</button>
+      </form>
+    </div>
+  </main>
+</div>

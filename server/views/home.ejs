@@ -1,0 +1,108 @@
+<%- include('./partials/header.ejs') %>
+<!--Main Content-->
+<div class="main-container">
+  <div class="header-banner">
+    <div class="categories">
+      <h3>Categories</h3>
+      <ul>
+        <li>
+          <i class="fa-solid fa-building"></i>
+          <a href="/property/studioapartments">Studio Apartments</a>
+        </li>
+        <li>
+          <i class="fa-solid fa-bed"></i>
+          <a href="/property/singlerooms">Single Rooms</a>
+        </li>
+        <li>
+          <i class="fa-solid fa-truck"></i>
+          <a href="/property/bedrooms">1,2,3 Bedrooms</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="banner">
+      <img src="/img/h1.jpg" alt="banner" />
+    </div>
+  </div>
+
+    <h3 class="house-type-title">Promoted</h3>
+    <div class="row row-cols-3 row-cols-md-4 g-4">
+        <% if(randproperties){ %> 
+            <% randproperties.forEach((property) => { %>
+            <div class="col">
+                <a href="/showproperty/<%= property.property_id %>" class="card h-100 card-house">
+                    <img src="<%= property.property_image %>" alt="house image" />
+                    <div class="card-body">
+                    <h4 class="card-title"><%= property.property_name %></h4>
+                    <p class="card-text"><%= property.property_type %></p>
+                    <p class="card-house-location"><%= property.property_location %></p>
+                    <p class="card-house-price">Ksh <%= property.property_price.toLocaleString("en-UK") %></p>
+                    </div>
+                </a>
+            </div>
+            <% }) %> 
+        <% } %>
+    </div>
+
+  <!--Studio Apartments-->
+    <% if(studioapt){ %> 
+        <% studioapt.forEach((property) => { %>
+        <h3 class="house-type-title"><%= property.property_type %></h3>
+        <div class="row row-cols-3 row-cols-md-4 g-4">
+            <div class="col">
+                <a href="/showproperty/<%= property.property_id %>" class="card h-100 card-house">
+                    <img src="<%= property.property_image %>" alt="house image" />
+                    <div class="card-body">
+                    <h4 class="card-title"><%= property.property_name %></h4>
+                    <p class="card-text"><%= property.property_type %></p>
+                    <p class="card-house-location"><%= property.property_location %></p>
+                    <p class="card-house-price">Ksh <%= property.property_price.toLocaleString("en-UK") %></p>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <% }) %>
+    <% } %>
+
+  <!--Bedrooms-->
+    <% if(bedrooms){ %> 
+        <% bedrooms.forEach((property) => { %>
+        <h3 class="house-type-title"><%= property.property_type %></h3>
+        <div class="row row-cols-3 row-cols-md-4 g-4">
+            <div class="col">
+            <a href="/showproperty/<%= property.property_id %>" class="card h-100 card-house">
+                <img src="<%= property.property_image %>" alt="house image" />
+                <div class="card-body">
+                <h4 class="card-title"><%= property.property_name %></h4>
+                <p class="card-text"><%= property.property_type %></p>
+                <p class="card-house-location"><%= property.property_location %></p>
+                <p class="card-house-price">Ksh <%= property.property_price.toLocaleString("en-UK") %></p>
+                </div>
+            </a>
+            </div>
+        </div>
+        <% }) %> 
+    <% } %>
+
+  <!--Single rooms-->
+    <% if(singlerms){ %> 
+        <% singlerms.forEach((property) => { %>
+            <h3 class="house-type-title"><%= property.property_type %></h3>
+            <div class="row row-cols-3 row-cols-md-4 g-4">
+                <div class="col">
+                <a href="/showproperty/<%= property.property_id %>" class="card h-100 card-house">
+                    <img src="<%= property.property_image %>" alt="house image" />
+                    <div class="card-body">
+                    <h4 class="card-title"><%= property.property_name %></h4>
+                    <p class="card-text"><%= property.property_type %></p>
+                    <p class="card-house-location"><%= property.property_location %></p>
+                    <p class="card-house-price">Ksh <%= property.property_price.toLocaleString("en-UK") %></p>
+                    </div>
+                </a>
+                </div>
+            </div>
+        <% }) %> 
+    <% } %>
+ 
+</div>
+<%- include('./partials/footer.ejs') %>

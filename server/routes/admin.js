@@ -1,14 +1,16 @@
 const express = require("express");
 const router = express.Router();
 const adminController = require("../controllers/adminController");
-require("../../config/passport");
-const { upload, checkAuthenticationAdmin,authPage } = require("../../middleware/middleware");
+require("../config/passport");
+const { upload, checkAuthenticationAdmin,authPage } = require("../middleware/middleware");
 
-router.route("/").get(authPage('ADMIN'),adminController.getAdminPanel);
+
+
+router.route("/").get(checkAuthenticationAdmin,adminController.getAdminPanel);
 
 router.route("/studioapartments").get(authPage('ADMIN'),adminController.getStudioAdmin);
-router.route("/singlerooms").get(adminController.getSingleAdmin);
-router.route("/bedrooms").get(adminController.getBedroomAdmin);
+router.route("/singlerooms").get(authPage('ADMIN'),adminController.getSingleAdmin);
+router.route("/bedrooms").get(authPage('ADMIN'),adminController.getBedroomAdmin);
 
 router
   .route("/addproperty")

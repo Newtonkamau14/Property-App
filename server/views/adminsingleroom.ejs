@@ -1,0 +1,46 @@
+<div class="admin-panel">
+    <div class="menu-toggle">
+      <div class="hamburger">
+        <span></span>
+      </div>
+    </div>
+    <%- include('./partials/sidebar') %>
+    <main class="content">
+      <div class="table-responsive">
+        <table class="my-5 table table-striped">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Location</th>
+              <th>Price</th>
+              <th>Type</th>
+              <th>Purpose</th>
+              <th></th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% singlerms.forEach((single) => { %>
+            <tr>
+              <td><%= single.property_name %></td>
+              <td><%= single.property_location %></td>
+              <td><%= single.property_price.toLocaleString("en-UK") %></td>
+              <td><%= single.property_type %></td>
+              <td><%= single.property_purpose %></td>
+              <td>
+                <a
+                  href="/admin/editproperty/<%= single.property_id %>"
+                  class="btn btn-secondary"
+                  >Edit
+                  </a>
+              </td>
+              <td>
+                <form action="/admin/deleteproperty/<%= single.property_id %>?_method=DELETE" method="post"><button class="btn btn-danger">Delete</button></form>
+              </td>
+            </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+    </main>
+  </div>

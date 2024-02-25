@@ -8,7 +8,7 @@ const gc = new Storage({
   projectId: "property-app-382708",
   keyFilename: path.join(
     __dirname,
-    "../../config/property-app-382708-b32d8467c05c.json"
+    "../config/property-app-382708-b32d8467c05c.json"
   ),
 });
 
@@ -207,11 +207,21 @@ const getEditPropertyPage = async (req, res) => {
 //Edit Property
 const editProperty = async (req, res) => {
   try {
+  
+    let formattedPrice = req.body.property_price;
+    let KeShilling = new Intl.NumberFormat("en-UK", {
+      style: "currency",
+      currency: "KES",
+    });
+
+
+    KeShilling.format(formattedPrice);
     const updatedProperty = await Property.update(
       {
         property_name: req.body.property_name,
-        property_price: req.body.property_price,
-        property_image: req.body.property_image,
+        property_location: req.body.property_location,
+        property_price: formattedPrice,
+        property_type: req.body.property_type,
         property_purpose: req.body.property_purpose,
       },
       {
@@ -269,7 +279,6 @@ const searchProperty = async (req, res) => {
         "property_image",
         "property_purpose",
         "geometry",
-        "createdAt",
       ],
       where: {
         [Op.or]: [
@@ -314,8 +323,6 @@ const searchProperty = async (req, res) => {
 };
 
 module.exports = {
-  gc,
-  propertyAppBucket,
   getAdminPanel,
   getAddPropertyPage,
   getBedroomAdmin,

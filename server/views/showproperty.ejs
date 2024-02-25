@@ -1,0 +1,67 @@
+<%- include('./partials/header.ejs') %>
+<div class="main-container">
+  <!-- Page Content-->
+  <div class="container px-4 px-lg-5">
+    <!-- Heading Row-->
+    <div class="row gx-4 gx-lg-5 align-items-center my-5">
+      <div class="col-lg-7">
+        <img
+          class="img-fluid rounded mb-4 mb-lg-0"
+          src="<%= property.property_image %>"
+          alt="..."
+        />
+      </div>
+      <div class="col-lg-5">
+        <h1 class="font-weight-light"><%= property.property_name %></h1>
+        <p><%= property.property_type %></p>
+        <p><%= property.property_location %></p>
+        <p><%= property.property_price.toLocaleString("en-UK") %></p>
+        <p class="text-primary"><%= property.property_purpose %></p>
+      </div>
+    </div>
+    <!-- Call to Action-->
+    <div class="card text-white bg-secondary my-5 py-4 text-center">
+      <div class="card-body">
+        <p class="card-text">Last updated 3 mins ago</p>
+      </div>
+    </div>
+
+    <h1 class="font-weight-light m-4">Location</h1>
+
+    <div id="map"></div>
+
+    <h1 class="font-weight-light m-4">Other Pictures</h1>
+    <!-- Content Row-->
+    <div class="row gx-4 gx-lg-5">
+      <div class="col-md-4 mb-5">
+        <div class="card h-100">
+          <img
+            src="https://dummyimage.com/300x250/dee2e6/6c757d.jpg"
+            class="card-img-top"
+            alt="..."
+          />
+        </div>
+      </div>
+      <div class="col-md-4 mb-5">
+        <div class="card h-100">
+          <img
+            src="https://dummyimage.com/300x250/dee2e6/6c757d.jpg"
+            class="card-img-top"
+            alt="..."
+          />
+        </div>
+      </div>
+      <div class="col-md-4 mb-5">
+        <div class="card h-100">
+          <img
+            src="https://dummyimage.com/300x250/dee2e6/6c757d.jpg"
+            class="card-img-top"
+            alt="..."
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="/js/map.js"></script>
+<%- include('./partials/footer.ejs') %>

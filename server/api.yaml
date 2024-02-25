@@ -1,0 +1,206 @@
+openapi: 3.0.3
+info:
+    title: Property-App
+    description: Property App using expressjs and mysql.
+    version: 1.0.0
+servers:
+  - url: /
+
+
+
+components:
+  schemas:
+    Property:
+      type: object
+      required:
+        - property_name
+        - property_location
+        - property_price
+        - property_type
+        - property_purpose
+        - availability
+        - geometry
+        - user_id
+      properties:
+        property_id:
+            type: string
+            description: The auto-generated id of the property
+        property_name:
+            type: string
+            description: The property name
+        property_location:
+            type: string
+            description: The location of the property
+        property_price:
+            type: number
+            description: The price of the property
+        property_image:
+            type: string
+            description: The image of the property
+        property_type:
+            type: string
+            description: The type of property
+        property_purpose:
+            type: string
+            description: The purpose of the property
+        availability:
+            type: boolean
+            description: To state whether the property is available or not
+        geometry:
+            type: string
+            description: The co-ordinates of the property
+      example:
+        property_id: 4c0c951d-2a19-471d-b14c-905c46ba4c2a
+        property_name: not west
+        property_location: Nakuru
+        property_price: 36000
+        property_image: https://storage.googleapis.com/zillow/image.jpg
+        property_type: Rent
+        property_purpose: For sale
+        availability: true
+        geometry: 0x0000000001010000005020E1737027F4BF9D46767A7E664240
+        user_id: a8939bf2-6662-4ba7-b038-b79216c41c81
+
+    User:
+      type: object
+      required:
+        - email
+        - password
+      properties:
+        user_id:
+            type: string
+            description: The auto-generated id of the user
+        username:
+            type: string
+            description: The username of the user
+        email:
+            type: string
+            description: The email of the user
+        role:
+            type: string
+            description: The role of the user can be admin or user
+        password: 
+            type: string
+            description: The password of the user
+      example:
+        user_id: a8939bf2-6662-4ba7-b038-b79216c41c81
+        username: john
+        email: john@gmail.com
+        role: ADMIN
+        password: password
+
+tags:
+  name: User Authentication
+  description: User Authentication APIs
+  name: Property
+  description: Property APIs for client side
+  name: Admin Property
+  description: Property APIs for admin
+
+paths:
+  /:
+    get:
+      summary: Returns the list of all the properties
+      tags: [Property]
+      responses:
+          200:
+            description: OK
+            content:
+              application/json:
+                  schema:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Property'
+          404:
+            description: Not found
+
+  /property/bedrooms:
+    get:
+      summary: Property types featuring 1,2,3 Bedrooms
+      tags: [Property]
+      responses:
+          200:
+            description: OK
+            content:
+              application/json:
+                  schema:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Property'
+          404: 
+            description: Not found      
+  /property/singlerooms:
+    get:
+      summary: Property types featuring single rooms
+      tags: [Property]
+      responses:
+          200:
+            description: OK
+            content:
+              application/json:
+                  schema:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Property'
+          404: 
+            description: Not found 
+
+  /property/studioapartments:
+    get:
+      summary: Property types featuring studio apartments
+      tags: [Property]
+      responses:
+          200:
+            description: OK
+            content:
+              application/json:
+                  schema:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Property'
+          404: 
+            description: Not found      
+
+  /showproperty/{property_id}:
+    get:
+      summary: Show a single property based on the property id
+      tags: [Property]
+      parameters:
+        - in: path
+          name: property id
+          schema:
+            type: string
+          required: true
+          description: The property id
+      responses:
+          200:
+            description: OK
+            content:
+              application/json:
+                  schema:
+                    type: object
+                    items:
+                      $ref: '#/components/schemas/Property'
+          404: 
+            description: Not found   
+
+  /search-property:
+    get:
+      summary: Search property by name,location,purpose,type
+      tags: [Property]
+      parameters:
+        - in: query
+          name: searchproperty
+          type: string
+          description: The search query
+      responses:
+          200:
+            description: OK
+            content:
+              application/json:
+                  schema:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Property'
+          404: 
+            description: Not found           
