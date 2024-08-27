@@ -9,10 +9,9 @@
     <h1>Edit Property</h1>
     <div class="d-flex align-items-center justify-content-center">
       <form
-        action="/admin/editproperty/<%= property.property_id %>"
+        action="/admin/editproperty/<%= property.property_id %>?_method=PATCH"
         method="post"
         class="border rounded p-3 col-6"
-        enctype="multipart/form-data"
       >
         <div class="form-group my-4">
           <label for="propertyname">Property Name</label>
