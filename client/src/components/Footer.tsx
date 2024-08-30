@@ -1,4 +1,5 @@
 function Footer() {
+  const currentYear = new Date().getFullYear();
   return (
     <footer className="footer d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
       <div className="col-md-4 d-flex align-items-center ms-3">
@@ -9,7 +10,7 @@ function Footer() {
           <i className="fa-solid fa-house"></i>
         </a>
         <span className="mb-3 mb-md-0 fs-4">
-          MyProperty &#169; <span className="yr"></span>
+          MyProperty &#169; {currentYear}
         </span>
       </div>
 
