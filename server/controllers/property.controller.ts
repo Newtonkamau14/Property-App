@@ -99,9 +99,7 @@ const getBedrooms: RequestHandler = async (req: Request, res: Response) => {
       },
     });
     if (!bedrooms || bedrooms.length === 0) {
-      return res.status(404).render("bedrooms", {
-        title: "1,2,3 Bedrooms",
-        bedrooms: bedrooms,
+      return res.status(404).json({
         message: "Properties not found",
       });
     }
@@ -131,9 +129,7 @@ const getSingleRoom: RequestHandler = async (req: Request, res: Response) => {
     });
 
     if (!singlerms || singlerms.length === 0) {
-      return res.status(404).render("singleroom", {
-        title: "Single Rooms",
-        singlerms: singlerms,
+      return res.status(404).json({
         message: "Properties not found",
       });
     }
