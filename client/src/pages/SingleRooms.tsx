@@ -10,12 +10,11 @@ function SingleRooms() {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   useEffect(() => {
+    setLoading(true);
     axios
       .get("/properties/singlerooms")
       .then((response) => {
-        setLoading(true);
         setSingleRms(response.data.singlerms);
-        setLoading(false);
       })
       .catch((error) => {
         const message = error.response?.data?.message || "An error occurred";
@@ -43,12 +42,12 @@ function SingleRooms() {
       <div className="row row-cols-3 row-cols-md-4 g-4">
         {singlerms.length > 0 ? (
           singlerms.map((property) => (
-            <div className="col">
-              <Property key={property.property_id} property={property} />
+            <div key={property.property_id} className="col">
+              <Property property={property} />
             </div>
           ))
         ) : (
-          <span></span>
+          <h3>No single rooms available</h3>
         )}
       </div>
     </div>

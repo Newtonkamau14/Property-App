@@ -10,12 +10,11 @@ function Bedrooms() {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   useEffect(() => {
+    setLoading(true);
     axios
       .get("/properties/bedrooms")
       .then((response) => {
-        setLoading(true);
         setBedrooms(response.data.bedrooms);
-        setLoading(false);
       })
       .catch((error) => {
         const message = error.response?.data?.message || "An error occurred";
@@ -43,8 +42,8 @@ function Bedrooms() {
       <div className="row row-cols-3 row-cols-md-4 g-4">
         {bedrooms.length > 0 ? (
           bedrooms.map((property) => (
-            <div className="col">
-              <Property key={property.property_id} property={property} />
+            <div key={property.property_id} className="col">
+              <Property property={property} />
             </div>
           ))
         ) : (
