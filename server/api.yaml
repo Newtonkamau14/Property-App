@@ -47,8 +47,14 @@ components:
             type: boolean
             description: To state whether the property is available or not
         geometry:
-            type: string
-            description: The co-ordinates of the property
+            type: object
+            properties: 
+              type:
+                  type: string
+                  required: true
+              coordinates:
+                  type: array 
+                  required: true
       example:
         property_id: 4c0c951d-2a19-471d-b14c-905c46ba4c2a
         property_name: not west
@@ -58,7 +64,9 @@ components:
         property_type: Rent
         property_purpose: For sale
         availability: true
-        geometry: 0x0000000001010000005020E1737027F4BF9D46767A7E664240
+        geometry:
+          type: Point
+          coordinates: [-1.2596287275828395,36.80073481345355]
         user_id: a8939bf2-6662-4ba7-b038-b79216c41c81
 
     User:
@@ -98,7 +106,7 @@ tags:
   description: Property APIs for admin
 
 paths:
-  /:
+  /properties:
     get:
       summary: Returns the list of all the properties
       tags: [Property]
@@ -110,11 +118,13 @@ paths:
                   schema:
                     type: array
                     items:
-                      $ref: '#/components/schemas/Property'
+                      $ref: '#/components/schemas/Property'            
           404:
             description: Not found
+          500:
+            description: Internal server error  
 
-  /property/bedrooms:
+  /properties/bedrooms:
     get:
       summary: Property types featuring 1,2,3 Bedrooms
       tags: [Property]
@@ -128,8 +138,10 @@ paths:
                     items:
                       $ref: '#/components/schemas/Property'
           404: 
-            description: Not found      
-  /property/singlerooms:
+            description: Properties not found
+          500:
+            description: Internal server error        
+  /properties/singlerooms:
     get:
       summary: Property types featuring single rooms
       tags: [Property]
@@ -143,9 +155,11 @@ paths:
                     items:
                       $ref: '#/components/schemas/Property'
           404: 
-            description: Not found 
+            description: Properties not found
+          500:
+            description: Internal server error   
 
-  /property/studioapartments:
+  /properties/studioapartments:
     get:
       summary: Property types featuring studio apartments
       tags: [Property]
@@ -159,9 +173,11 @@ paths:
                     items:
                       $ref: '#/components/schemas/Property'
           404: 
-            description: Not found      
+            description: Properties not found
+          500:
+            description: Internal server error         
 
-  /showproperty/{property_id}:
+  /properties/showproperty/{property_id}:
     get:
       summary: Show a single property based on the property id
       tags: [Property]
@@ -178,13 +194,13 @@ paths:
             content:
               application/json:
                   schema:
-                    type: object
+                    type: array
                     items:
                       $ref: '#/components/schemas/Property'
           404: 
             description: Not found   
 
-  /search-property:
+  /properties/search-property:
     get:
       summary: Search property by name,location,purpose,type
       tags: [Property]
@@ -202,5 +218,246 @@ paths:
                     type: array
                     items:
                       $ref: '#/components/schemas/Property'
+          400:
+            description: Missing required fields in the form            
           404: 
-            description: Not found           
+            description: No properties found matching your search
+          500:
+            description: Internal server error   
+
+  /admin:
+    get:
+      summary: Get all properties in admin dashboard
+      tags: [Admin Property]
+      responses:
+          200:
+            description: OK
+            content:
+              application/json:
+                  schema:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Property' 
+          500:
+            description: Internal server error  
+
+  /admin/studioaprtments:
+    get:
+      summary: Get all properties in admin dashboard
+      tags: [Admin Property]
+      responses:
+          200:
+            description: OK
+            content:
+              application/json:
+                  schema:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Property' 
+          404:
+            description: Properties not found            
+          500:
+            description: Internal server error   
+
+  /admin/singlerooms:
+    get:
+      summary: Get all properties in admin dashboard
+      tags: [Admin Property]
+      responses:
+          200:
+            description: OK
+            content:
+              application/json:
+                  schema:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Property' 
+          404:
+            description: Properties not found                
+          500:
+            description: Internal server error  
+
+  /admin/bedrooms:
+    get:
+      summary: Get all properties in admin dashboard
+      tags: [Admin Property]
+      responses:
+          200:
+            description: OK
+            content:
+              application/json:
+                  schema:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Property'
+          404:
+            description: Properties not found                 
+          500:
+            description: Internal server error 
+
+  /admin/addproperty:          
+    post:
+      summary: Add property
+      tags: [Admin Property]
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                property_name:
+                  type: string
+                property_location:
+                  type: string
+                property_price:
+                  type: string
+                property_price:
+                  type: string
+                property_image:
+                  type: string
+                  format: binary
+                property_type:
+                  type: string
+                property_purpose:
+                  type: string
+                longitude:
+                  type: string
+                latitude:
+                  type: string      
+              required: 
+                - property_name
+                - property_location
+                - property_price
+                - property_image
+                - property_type
+                - property_purpose
+                - longitude
+                - latitude
+      responses:
+          201:
+            description: OK
+            content:
+              application/json:
+                schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Property'
+          400:
+            description: Missing required fields in the form  
+          400:
+            description: Property already exists
+          500:
+            description: Error during file upload           
+
+  /admin/search-property:
+    get:
+      summary: Search property by name,location,purpose,type in admin dashboard
+      tags: [Admin Property]
+      parameters:
+        - in: query
+          name: search
+          type: string
+          description: The search query
+      responses:
+          200:
+            description: OK
+            content:
+              application/json:
+                  schema:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Property'
+          400:
+            description: Missing required fields in the form            
+          404: 
+            description: No properties found matching your search
+          500:
+            description: Internal server error
+
+  /admin/editproperty/{propery_id}:
+    put:
+      summary: Edit property
+      tags: [Admin Property]
+      parameters:
+        - in: path
+          name: property_id
+          schema:
+            type: string
+          required: true
+          description: The id of the property
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                property_name:
+                  type: string
+                property_location:
+                  type: string
+                property_price:
+                  type: string
+                property_price:
+                  type: string
+                property_image:
+                  type: string
+                  format: binary
+                property_type:
+                  type: string
+                property_purpose:
+                  type: string
+                longitude:
+                  type: string
+                latitude:
+                  type: string      
+              required: 
+                - property_name
+                - property_location
+                - property_price
+                - property_image
+                - property_type
+                - property_purpose
+                - longitude
+                - latitude    
+
+  /admin/deleteproperty/{property_id}:
+    delete:
+      summary: Delete property
+      tags: [Admin Property]          
+      parameters:
+        - in: path
+          name: property_id
+          schema:
+            type: string
+          required: true
+          description: The id of the property  
+      responses:
+          200: 
+            description: OK
+          500:
+            description: Internal server error  
+
+  /auth/admin/login:
+    post:
+      summary: Admin login
+      tags: [User Authentication]
+
+
+
+  /auth/admin/signup:
+    post:
+      summary: Admin Sign Up
+      tags: [User Authentication] 
+
+  /logout:
+    get:
+      summary: Logout Admin
+      tags: [User Authentication]
+      responses:
+          201:
+            description: OK
+          500:
+            description: Internal server error  
+  
