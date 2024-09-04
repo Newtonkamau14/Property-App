@@ -6,76 +6,45 @@ import { User } from "../models/user.model";
 //Get home page
 const getHomePage: RequestHandler = async (req: Request, res: Response) => {
   try {
-    const randproperties = await Property.findAll({
-      attributes: [
-        "property_id",
-        "property_name",
-        "property_location",
-        "property_price",
-        "property_image",
-        "property_purpose",
-        "geometry",
-        "createdAt",
-      ],
-      limit: 8,
-      order: Sequelize.literal("rand()"),
-    });
+    const attributes = [
+      "property_id",
+      "property_name",
+      "property_location",
+      "property_price",
+      "property_image",
+      "property_purpose",
+      "geometry",
+      "createdAt",
+    ];
 
-    const studioapt = await Property.findAll({
-      attributes: [
-        "property_id",
-        "property_name",
-        "property_location",
-        "property_price",
-        "property_image",
-        "property_purpose",
-        "geometry",
-        "createdAt",
-      ],
-      where: {
-        property_type: "Studio Apartments",
-      },
-    });
-
-    const singlerms = await Property.findAll({
-      attributes: [
-        "property_id",
-        "property_name",
-        "property_location",
-        "property_price",
-        "property_image",
-        "property_purpose",
-        "geometry",
-        "createdAt",
-      ],
-      where: {
-        property_type: "Single Rooms",
-      },
-    });
-
-    const bedrooms = await Property.findAll({
-      attributes: [
-        "property_id",
-        "property_name",
-        "property_location",
-        "property_price",
-        "property_image",
-        "property_purpose",
-        "geometry",
-        "createdAt",
-      ],
-      where: {
-        property_type: "1,2,3 Bedrooms",
-      },
-    });
+    const [randproperties, studioapt, singlerms, bedrooms] = await Promise.all([
+      Property.findAll({
+        attributes,
+        limit: 8,
+        order: Sequelize.literal("rand()"),
+      }),
+      Property.findAll({
+        attributes,
+        where: { property_type: "Studio Apartments" },
+      }),
+      Property.findAll({
+        attributes,
+        where: { property_type: "Single Rooms" },
+      }),
+      Property.findAll({
+        attributes,
+        where: { property_type: "1,2,3 Bedrooms" },
+      }),
+    ]);
 
     return res.status(200).json({
-      randproperties: randproperties,
-      studioapt: studioapt,
-      singlerms: singlerms,
-      bedrooms: bedrooms,
+      randproperties,
+      studioapt,
+      singlerms,
+      bedrooms,
     });
   } catch (error) {
+    console.error("Error fetching properties:", error);
     return res.status(500).json({ message: "Internal server error" });
   }
 };
