@@ -1,0 +1,297 @@
+* {
+  @font-face {
+    font-family: "Nunito Sans", sans-serif;
+    src: url("https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,600;1,700;1,800;1,900&display=swap");
+  }
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #e7e9eb;
+}
+
+.navbar i {
+  color: #4296ff;
+}
+
+.brand-title {
+  font-size: 1.5rem;
+  margin: 0.5rem;
+}
+
+.brand-title i {
+  margin: 0.5rem;
+}
+
+/*Main content*/
+.main-container {
+  margin: 25px 50px;
+}
+
+.header-banner {
+  display: flex;
+}
+
+.categories {
+  background-color: white;
+  border-radius: 4px;
+  padding: 10px;
+  width: 25%;
+}
+
+.categories ul {
+  margin: 0 10px;
+  padding: 0;
+}
+
+.categories i {
+  color: #4296ff;
+}
+
+.categories ul li {
+  list-style: none;
+  margin: 30px 0;
+}
+
+.categories ul li a {
+  text-decoration: none;
+  color: #000000;
+}
+
+.banner {
+  padding: 0;
+  margin-left: 20px;
+  width: 75%;
+}
+
+.banner img {
+  background-position: center;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  border-radius: 4px;
+  max-width: 100%;
+}
+
+.house-type-title {
+  padding: 5px;
+  margin: 30px 0;
+}
+
+.house-type-group {
+  background-color: white;
+  border-radius: 4px;
+}
+
+.card-house {
+  text-decoration: none;
+  color: black;
+  margin: 10px 5px;
+  border-radius: 4px;
+}
+
+.card-house:hover {
+  box-shadow: 0 0 10px rgb(137, 142, 148);
+}
+
+.card-house img {
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  max-width: 100%;
+  border-radius: 4px;
+}
+
+.card-house h4,
+p {
+  padding: 0 10px;
+}
+
+.card-house-location {
+  font-weight: 200;
+}
+
+.card-house-price {
+  color: coral;
+}
+
+.login {
+  max-width: 20%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 100px;
+}
+
+.login div {
+  margin: 15px 0;
+}
+
+.login div label {
+  display: block;
+  margin-bottom: 4px;
+}
+
+.login input {
+  border: 1px solid gray;
+  border-radius: 4px;
+  width: 100%;
+  height: 30px;
+}
+
+.login button {
+  color: white;
+  background-color: #1a73e8;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-size: medium;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+/* Maybe change to 400px */
+#map {
+  height: 400px;
+}
+
+.footer i {
+  color: #4296ff;
+}
+
+
+
+/*Admin panel*/
+.admin-panel {
+	display: flex;
+	min-height: 100vh;
+}
+
+.menu-toggle {
+	display: none;
+	position: fixed;
+	top: 2rem;
+	right: 2rem;
+	width: 60px;
+	height: 60px;
+	border-radius: 99px;
+	background-color: #2e3047;
+	cursor: pointer;
+}
+
+.hamburger {
+	position: relative;
+	top: calc(50% - 2px);
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: 32px;
+}
+
+.hamburger > span,
+.hamburger > span::before,
+.hamburger > span::after {
+  display: block;
+  position: absolute;
+  width: 100%;
+  height: 4px;
+  border-radius: 99px;
+  background-color: #FFF;
+  transition-duration: .25s;
+}
+
+.hamburger > span::before {
+  content: '';
+  top: -8px;
+}
+.hamburger > span::after {
+  content: '';
+  top: 8px;
+}
+.menu-toggle.is-active .hamburger > span {
+  transform: rotate(45deg);
+}
+.menu-toggle.is-active .hamburger > span::before {
+  top: 0;
+  transform: rotate(0deg);
+}
+.menu-toggle.is-active .hamburger > span::after {
+  top: 0;
+  transform: rotate(90deg);
+}
+
+.sidebar {
+	flex: 1 1 0;
+	max-width: 300px;
+	padding: 2rem 1rem;
+	background-color: #2e3047;
+}
+
+.sidebar h3 {
+	color: #707793;
+	font-size: 0.75rem;
+	text-transform: uppercase;
+	margin-bottom: 0.5em;
+}
+
+.sidebar .menu {
+	margin: 0 -1rem;
+}
+
+.sidebar .menu .menu-item {
+	display: block;
+	padding: 1em;
+	color: #FFF;
+	text-decoration: none;
+	transition: 0.2s linear;
+}
+
+.sidebar .menu .menu-item:hover,
+.sidebar .menu .menu-item.is-active {
+	color: #4296FF;
+	border-right: 5px solid #4296FF;
+}
+
+.sidebar .menu .menu-item:hover {
+	border-right: 5px solid #4296FF;
+}
+
+.content {
+	flex: 1 1 0;
+	padding: 2rem;
+}
+
+.content h1 {
+	color: #3C3F58;
+	font-size: 2.5rem;
+	margin-bottom: 1rem;
+}
+
+.content p {
+	color: #707793;
+}
+
+@media (max-width: 1024px) {
+	.sidebar {
+		max-width: 200px;
+	}
+}
+
+@media (max-width: 768px) {
+	.menu-toggle {
+		display: block;
+	}
+	.content {
+		padding-top: 8rem;
+	}
+	.sidebar {
+		position: fixed;
+		top: 0;
+		left: -300px;
+		height: 100vh;
+		width: 100%;
+		max-width: 300px;
+		transition: 0.2s linear;
+	}
+
+	.sidebar.is-active {
+		left: 0;
+	}
+}
