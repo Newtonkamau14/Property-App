@@ -3,11 +3,14 @@ import axios from "../api/axios";
 import { useEffect, useState } from "react";
 import { IProperty } from "../models/property";
 import Loading from "../components/Loading";
+import Pagination from "../components/Pagination";
 
 function Bedrooms() {
   const [loading, setLoading] = useState(false);
   const [bedrooms, setBedrooms] = useState<IProperty[]>([]);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [propertiesPerPage, setPropertiesPerPage] = useState<number>(15);
 
   useEffect(() => {
     setLoading(true);
@@ -24,6 +27,17 @@ function Bedrooms() {
         setLoading(false);
       });
   }, []);
+
+  const indexOfLastProperty = currentPage * propertiesPerPage;
+  const indexOfFirstProperty = indexOfLastProperty - propertiesPerPage;
+  const currentProperties = bedrooms.slice(
+    indexOfFirstProperty,
+    indexOfLastProperty
+  );
+
+  const handlePagination = (pageNumber: number) => {
+    setCurrentPage(pageNumber);
+  };
 
   if (loading) {
     return <Loading />;
@@ -50,6 +64,12 @@ function Bedrooms() {
           <span></span>
         )}
       </div>
+      <Pagination
+        length={bedrooms.length}
+        propertiesPerPage={propertiesPerPage}
+        handlePagination={handlePagination}
+        currentPage={currentPage}
+      />
     </div>
   );
 }

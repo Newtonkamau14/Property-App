@@ -1,16 +1,14 @@
 import { Router } from "express";
 import authController from "../controllers/auth.controller";
 import passport from "passport";
-import { checkNotAuthenticatedAdmin } from "../middleware/middleware";
 
 const router = Router();
 
 //Admin
 router
   .route("/auth/admin/login")
-  .get(checkNotAuthenticatedAdmin, authController.getAdminLoginPage)
+  .get( authController.getAdminLoginPage)
   .post(
-    checkNotAuthenticatedAdmin,
     passport.authenticate("login", {
       successRedirect: "/admin",
       failureRedirect: "/auth/admin/login",
@@ -19,7 +17,7 @@ router
 
 router
   .route("/auth/admin/signup")
-  .get(checkNotAuthenticatedAdmin, authController.getAdminSignUpPage)
+  .get(authController.getAdminSignUpPage)
   .post(
     passport.authenticate("signup-admin", {
       successRedirect: "/admin",

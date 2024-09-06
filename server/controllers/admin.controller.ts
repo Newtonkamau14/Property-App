@@ -33,32 +33,12 @@ const getAdminPanel: RequestHandler = async (req: Request, res: Response) => {
     });
 
     if (!properties || properties.length === 0) {
-      return res.status(404).render("adminpanel", {
-        layout: "layouts/adminlayout",
-        title: "Admin Panel",
-        properties: properties,
+      return res.status(404).json({
         message: "Properties not found",
       });
     }
-    return res.status(200).render("adminpanel", {
-      layout: "layouts/adminlayout",
-      title: "Admin Panel",
+    return res.status(200).json({
       properties: properties,
-    });
-  } catch (error) {
-    res.status(500).json({ message: "Internal server error" });
-  }
-};
-
-//Get Add property page
-const getAddPropertyPage: RequestHandler = async (
-  req: Request,
-  res: Response
-) => {
-  try {
-    return res.render("addproperty", {
-      layout: "layouts/adminlayout",
-      title: "Add Property",
     });
   } catch (error) {
     return res.status(500).json({ message: "Internal server error" });
@@ -74,20 +54,15 @@ const getBedroomAdmin: RequestHandler = async (req: Request, res: Response) => {
       },
     });
     if (!bedrooms || bedrooms.length === 0) {
-      return res.status(404).render("adminbedrooms", {
-        layout: "layouts/adminlayout",
-        title: "1,2,3 Bedrooms",
-        bedrooms: bedrooms,
+      return res.status(404).json({
         message: "Properties not found",
       });
     }
-    return res.render("adminbedrooms", {
-      layout: "layouts/adminlayout",
-      title: "1,2,3 Bedrooms",
+    return res.status(200).json({
       bedrooms: bedrooms,
     });
   } catch (error) {
-    res.status(500).json({ message: "Internal server error" });
+    return res.status(500).json({ message: "Internal server error" });
   }
 };
 
@@ -100,17 +75,12 @@ const getStudioAdmin: RequestHandler = async (req: Request, res: Response) => {
       },
     });
     if (!studioapt || studioapt.length === 0) {
-      return res.status(404).render("adminstudioapartments", {
-        layout: "layouts/adminlayout",
-        title: "Studio Apartments",
-        studioapt: studioapt,
+      return res.status(404).json({
         message: "Properties not found",
       });
     }
 
-    return res.render("adminstudioapartments", {
-      layout: "layouts/adminlayout",
-      title: "Studio Apartments",
+    return res.status(200).json({
       studioapt: studioapt,
     });
   } catch (error) {
@@ -128,16 +98,11 @@ const getSingleAdmin: RequestHandler = async (req: Request, res: Response) => {
     });
 
     if (!singlerms || singlerms.length === 0) {
-      return res.status(404).render("adminsingleroom", {
-        layout: "layouts/adminlayout",
-        title: "Single Rooms",
-        singlerms: singlerms,
+      return res.status(404).json({
         message: "Properties not found",
       });
     }
-    return res.render("adminsingleroom", {
-      layout: "layouts/adminlayout",
-      title: "Single Rooms",
+    return res.status(200).json({
       singlerms: singlerms,
     });
   } catch (error) {
@@ -217,7 +182,7 @@ const addProperty: RequestHandler = async (
           user_id: req.user?.user_id,
         });
 
-        return res.status(201).redirect("/admin");
+        return res.status(201).json({ message: "Property added successfully" });
       } catch (error) {
         console.error("Error creating property:", error);
         next(error);
@@ -227,27 +192,9 @@ const addProperty: RequestHandler = async (
     blobStream.end(req.file.buffer);
   } catch (error) {
     console.error("Error during file upload:", error);
-    return res.status(500).render("addproperty", {
-      layout: "layouts/adminlayout",
-      title: "Add Property",
+    return res.status(500).json({
+      message: "Failed to add property",
     });
-  }
-};
-
-//Get Edit Page
-const getEditPropertyPage: RequestHandler = async (
-  req: Request,
-  res: Response
-) => {
-  try {
-    const property = await Property.findByPk(req.params.property_id);
-    return res.render("editproperty", {
-      layout: "layouts/adminlayout",
-      title: "Edit Property",
-      property: property,
-    });
-  } catch (error) {
-    return res.status(500).json({ message: "Internal server error" });
   }
 };
 
@@ -321,9 +268,9 @@ const deleteProperty: RequestHandler = async (req: Request, res: Response) => {
     if (deletedCount === 0) {
       return res.status(404).json({ message: "Property not found" });
     }
-    res.status(200).redirect("/admin");
+    return res.status(200).json({ message: "Property was deleted" });
   } catch (error) {
-    res.status(500).json({ message: "Internal server error" });
+    return res.status(500).json({ message: "Internal server error" });
   }
 };
 
@@ -380,9 +327,7 @@ const searchProperty: RequestHandler = async (req: Request, res: Response) => {
         .json({ message: "No properties found matching your search" });
     }
 
-    res.render("adminpanel", {
-      layout: "layouts/adminlayout",
-      title: "Admin Panel",
+    return res.status(200).json({
       properties: properties,
     });
   } catch (error) {
@@ -392,12 +337,10 @@ const searchProperty: RequestHandler = async (req: Request, res: Response) => {
 
 export default {
   getAdminPanel,
-  getAddPropertyPage,
   getBedroomAdmin,
   getStudioAdmin,
   getSingleAdmin,
   addProperty,
-  getEditPropertyPage,
   editProperty,
   deleteProperty,
   searchProperty,

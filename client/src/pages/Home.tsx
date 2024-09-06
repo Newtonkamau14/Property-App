@@ -1,46 +1,64 @@
 import { useEffect, useState } from "react";
 import { IProperty } from "../models/property";
 import Banner from "../components/Banner";
-import axios from "../api/axios";
+import axiosInstance from "../api/axios";
 import Property from "../components/Property";
+import Loading from "../components/Loading";
+import { usePropertiesContext } from "../hooks/usePropertiesContext";
+import axios from "axios";
+
+interface PropertyData {
+  randproperties: IProperty[];
+  studioapt: IProperty[];
+  singlerms: IProperty[];
+  bedrooms: IProperty[];
+}
 
 function Home() {
-  const [randproperties, setRandProperties] = useState<IProperty[]>([]);
-  const [studioapt, setStudioApt] = useState<IProperty[]>([]);
-  const [singlerms, setSingleRms] = useState<IProperty[]>([]);
-  const [bedrooms, setBedrooms] = useState<IProperty[]>([]);
-  const [loading, setLoading] = useState(false);
+  const { dispatch } = usePropertiesContext();
+  const [data, setData] = useState<PropertyData>({
+    randproperties: [],
+    studioapt: [],
+    singlerms: [],
+    bedrooms: [],
+  });
+  const [loading, setLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  useEffect(() => {
-    axios
-      .get("/")
-      .then((response) => {
-        setLoading(true);
-        setRandProperties(response.data.randproperties);
-        console.log(response.data.randproperties)
-        setStudioApt(response.data.studioapt);
-        setSingleRms(response.data.singlerms);
-        setBedrooms(response.data.bedrooms);
-        setLoading(false);
-      })
-      .catch((error) => {
+  const fetchData = async () => {
+    try {
+      setLoading(true);
+      setErrorMessage(null);
+
+      const response = await axiosInstance.get("/properties");
+
+      if (response.data) {
+        setData(response.data);
+        dispatch({
+          type: "SET_PROPERTIES",
+          payload: response.data,
+        });
+      } else {
+        setErrorMessage("No data found");
+      }
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
         const message = error.response?.data?.message || "An error occurred";
         setErrorMessage(message);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  }, []);
+      } else {
+        setErrorMessage("An unknown error occurred");
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []); // Removed dispatch from dependency
 
   if (loading) {
-    return (
-      <div className="d-flex justify-content-center">
-        <div className="spinner-border" role="status">
-          <span className="visually-hidden">Loading...</span>
-        </div>
-      </div>
-    );
+    return <Loading />;
   }
 
   if (errorMessage) {
@@ -51,52 +69,42 @@ function Home() {
     );
   }
 
-  return (
-    <div className="main-container">
-      <Banner />
-
-      <h3 className="house-type-title">Promoted</h3>
+  const renderPropertySection = (
+    title: string,
+    properties: IProperty[],
+    noDataMessage: string
+  ) => (
+    <div>
+      <h3 className="house-type-title">{title}</h3>
       <div className="row row-cols-3 row-cols-md-4 g-4">
-        {randproperties.length > 0 ? (
-          randproperties.map((property) => (
-            <div className="col">
-              <Property key={property.property_id} property={property} />
+        {properties.length > 0 ? (
+          properties.map((property) => (
+            <div key={property.property_id} className="col">
+              <Property property={property} />
             </div>
           ))
         ) : (
-          <h3>No properties</h3>
+          <h3>{noDataMessage}</h3>
         )}
       </div>
+    </div>
+  );
 
-      {studioapt.length > 0 ? (
-        studioapt.map((property) => (
-          <div className="col">
-            <Property key={property.property_id} property={property} />
-          </div>
-        ))
-      ) : (
-        <span></span>
+  return (
+    <div className="main-container">
+      <Banner />
+      {renderPropertySection(
+        "Promoted",
+        data.randproperties,
+        "No promoted properties"
       )}
-
-      {singlerms.length > 0 ? (
-        singlerms.map((property) => (
-          <div className="col">
-            <Property key={property.property_id} property={property} />
-          </div>
-        ))
-      ) : (
-        <span></span>
+      {renderPropertySection(
+        "Studio Apartments",
+        data.studioapt,
+        "No studio apartments"
       )}
-
-      {bedrooms.length > 0 ? (
-        bedrooms.map((property) => (
-          <div className="col">
-            <Property key={property.property_id} property={property} />
-          </div>
-        ))
-      ) : (
-        <span></span>
-      )}
+      {renderPropertySection("Single Rooms", data.singlerms, "No single rooms")}
+      {renderPropertySection("Bedrooms", data.bedrooms, "No bedrooms")}
     </div>
   );
 }

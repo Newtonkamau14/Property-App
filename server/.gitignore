@@ -1,3 +1,4 @@
 node_modules
 .env
 config/property-app-382708-b32d8467c05c.json
+server/pnpm-lock.yaml

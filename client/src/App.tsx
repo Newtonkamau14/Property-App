@@ -1,100 +1,114 @@
-import { createBrowserRouter,RouterProvider } from "react-router-dom";
-import 'bootstrap/dist/css/bootstrap.min.css';
-import '@fortawesome/fontawesome-free/css/all.min.css'
-import 'bootstrap/dist/js/bootstrap.bundle.min.js';
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "@fortawesome/fontawesome-free/css/all.min.css";
+import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import ClientLayout from "./pages/ClientLayout";
 import AdminLayout from "./pages/AdminLayout";
 import Home from "./pages/Home";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
-
+import ShowProperty from "./pages/ShowProperty";
+import SingleRooms from "./pages/SingleRooms";
+import Bedrooms from "./pages/Bedrooms";
+import StudioApartments from "./pages/StudioApartments";
+import ErrorBoundary from "./components/ErrorBoundary";
+import NotFoundPage from "./pages/NotFoundPage";
+import AdminPanel from "./pages/AdminPanel";
+import AdminStudioApartment from "./pages/AdminStudioApartment";
+import AdminSingleRoom from "./pages/AdminSingleRoom";
+import AdminBedroom from "./pages/AdminBedroom";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <ClientLayout/>,
+    element: <ClientLayout />,
     children: [
       {
         index: true,
-        element: <Home/>
+        element: <Home />,
       },
       {
-        path: "/property/bedrooms",
-        element: "",
+        path: "/properties/bedrooms",
+        element: <Bedrooms />,
       },
       {
-        path: "/property/singlerooms",
-        element: ""
+        path: "/properties/singlerooms",
+        element: <SingleRooms />,
       },
       {
-        path: "/property/studioapartments",
-        element: ""
+        path: "/properties/studioapartments",
+        element: <StudioApartments />,
       },
       {
         path: "/showproperty/:property_id",
-        element: ""
+        element: <ShowProperty />,
       },
       {
         path: "/search-property",
-        element: ""
-      }
-    ]
+        element: "",
+      },
+    ],
   },
   {
     path: "/admin",
-    element: <AdminLayout/>,
+    element: <AdminLayout />,
     children: [
       {
         path: "/admin",
-        element: ""
+        index: true,
+        element: <AdminPanel/>,
       },
       {
         path: "/admin/studioapartments",
-        element: ""
+        element: <AdminStudioApartment/>,
       },
       {
         path: "/admin/singlerooms",
-        element: ""
+        element: <AdminSingleRoom/>,
       },
       {
         path: "/admin/bedrooms",
-        element: ""
+        element: <AdminBedroom/>,
       },
       {
         path: "/admin/addproperty",
-        element: ""
+        element: "",
       },
       {
         path: "/admin/editproperty/:property_id",
-        element: ""
+        element: "",
       },
       {
         path: "/admin/search-property",
-        element: ""
+        element: "",
       },
-    ]
+    ],
   },
   {
     path: "/auth",
     children: [
       {
         path: "/auth/admin/login",
-        element: <Login/>
+        element: <Login />,
       },
       {
         path: "/auth/admin/signup",
-        element: <Signup/>
-      }
-    ]
+        element: <Signup />,
+      },
+    ],
+  },
+  {
+    path: "/error/:statusCode",
+    element: <ErrorBoundary/>
+  },
+  {
+    path: '*',
+    element: <NotFoundPage/>
   }
-])
-
+]);
 
 function App() {
-
-  return (
-    <RouterProvider router={router}/>
-  )
+  return <RouterProvider router={router} />;
 }
 
-export default App
+export default App;

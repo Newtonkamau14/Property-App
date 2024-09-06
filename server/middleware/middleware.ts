@@ -24,7 +24,7 @@ const upload = multer({
   },
 });
 
-//on admin routes
+/* //on admin routes
 //Check if Admin is signed in
 function checkAuthenticationAdmin(
   req: Request,
@@ -48,14 +48,14 @@ function checkNotAuthenticatedAdmin(
     return res.redirect("/admin");
   }
   next();
-}
+} */
 
 //check which user has authorization for each page
 const authPage = (role: string) => {
   return (req: Request, res: Response, next: NextFunction) => {
     if (!req.user) {
-      return res.status(403).render('403', {
-        title: 'Forbidden',
+      return res.status(403).json( {
+        message: "Forbidden"
       });
     }
 
@@ -73,7 +73,5 @@ const authPage = (role: string) => {
 
 export {
   upload,
-  checkAuthenticationAdmin,
-  checkNotAuthenticatedAdmin,
   authPage,
 };

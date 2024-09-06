@@ -3,7 +3,7 @@ import { sequelize } from "../config/database";
 
 
 interface UserAttributes {
-  user_id: string
+  user_id?: string
   username: string
   email:string
   role: string
