@@ -1,7 +1,19 @@
 import { useEffect, useState } from "react";
 import { IProperty } from "../models/property";
+import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
+import "leaflet/dist/leaflet.css";
+import L from "leaflet";
+import markerIcon from "leaflet/dist/images/marker-icon.png";
+import markerShadow from "leaflet/dist/images/marker-shadow.png";
 import { useParams } from "react-router-dom";
 import axios from "../api/axios";
+
+const DefaultIcon = L.icon({
+  iconUrl: markerIcon,
+  shadowUrl: markerShadow,
+});
+
+L.Marker.prototype.options.icon = DefaultIcon;
 
 function ShowProperty() {
   const { property_id } = useParams<{ property_id: string }>();
@@ -69,8 +81,35 @@ function ShowProperty() {
         </div>
 
         <h1 className="font-weight-light m-4">Location</h1>
+        <div className="map" style={{ height: "400px", width: "100%" }}>
+  {property?.geometry?.coordinates ? (
+    <MapContainer
+      center={[
+        property.geometry.coordinates[0],
+        property.geometry.coordinates[1],
+      ]}
+      zoom={13}
+      scrollWheelZoom={false}
+      style={{ height: "100%", width: "100%" }}
+    >
+      <TileLayer
+        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+      />
+      <Marker
+        position={[
+          property.geometry.coordinates[0],
+          property.geometry.coordinates[1],
+        ]}
+      >
+        <Popup>{property.property_name}</Popup>
+      </Marker>
+    </MapContainer>
+  ) : (
+    <p>Location information is unavailable.</p>
+  )}
+</div>
 
-        <div id="map"></div>
 
         <h1 className="font-weight-light m-4">Other Pictures</h1>
         <div className="row gx-4 gx-lg-5">
