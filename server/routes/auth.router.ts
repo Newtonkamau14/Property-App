@@ -7,7 +7,6 @@ const router = Router();
 //Admin
 router
   .route("/auth/admin/login")
-  .get( authController.getAdminLoginPage)
   .post(
     passport.authenticate("login", {
       successRedirect: "/admin",
@@ -17,7 +16,6 @@ router
 
 router
   .route("/auth/admin/signup")
-  .get(authController.getAdminSignUpPage)
   .post(
     passport.authenticate("signup-admin", {
       successRedirect: "/admin",
