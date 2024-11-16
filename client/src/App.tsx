@@ -17,6 +17,7 @@ import AdminPanel from "./pages/AdminPanel";
 import AdminStudioApartment from "./pages/AdminStudioApartment";
 import AdminSingleRoom from "./pages/AdminSingleRoom";
 import AdminBedroom from "./pages/AdminBedroom";
+import AddProperty from "./pages/AddProperty";
 
 const router = createBrowserRouter([
   {
@@ -72,7 +73,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/admin/addproperty",
-        element: "",
+        element: <AddProperty/>,
       },
       {
         path: "/admin/editproperty/:property_id",
