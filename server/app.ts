@@ -34,10 +34,9 @@ myStore.sync();
 
 //Middleware
 app.use(cors(corsOptions));
-app.use(router);
 app.use(logger("dev"));
-app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 app.use(
   session({
@@ -54,6 +53,8 @@ app.use(
 );
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(router);
+
 
 app.listen(PORT, async () => {
   console.log(`Listening on http://localhost:${PORT}`);
