@@ -18,6 +18,8 @@ import AdminStudioApartment from "./pages/AdminStudioApartment";
 import AdminSingleRoom from "./pages/AdminSingleRoom";
 import AdminBedroom from "./pages/AdminBedroom";
 import AddProperty from "./pages/AddProperty";
+import ProtectedRoute from "./components/ProtectedRoute";
+import PublicRoute from "./components/PublicRoute";
 
 const router = createBrowserRouter([
   {
@@ -57,23 +59,43 @@ const router = createBrowserRouter([
       {
         path: "/admin",
         index: true,
-        element: <AdminPanel/>,
+        element: (
+          <ProtectedRoute>
+            <AdminPanel />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "/admin/studioapartments",
-        element: <AdminStudioApartment/>,
+        element: (
+          <ProtectedRoute>
+            <AdminStudioApartment />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "/admin/singlerooms",
-        element: <AdminSingleRoom/>,
+        element: (
+          <ProtectedRoute>
+            <AdminSingleRoom />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "/admin/bedrooms",
-        element: <AdminBedroom/>,
+        element: (
+          <ProtectedRoute>
+            <AdminBedroom />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "/admin/addproperty",
-        element: <AddProperty/>,
+        element: (
+          <ProtectedRoute>
+            <AddProperty />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "/admin/editproperty/:property_id",
@@ -90,22 +112,30 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/auth/admin/login",
-        element: <Login />,
+        element: (
+          <PublicRoute>
+            <Login />
+          </PublicRoute>
+        ),
       },
       {
         path: "/auth/admin/signup",
-        element: <Signup />,
+        element: (
+          <PublicRoute>
+            <Signup />
+          </PublicRoute>
+        ),
       },
     ],
   },
   {
     path: "/error/:statusCode",
-    element: <ErrorBoundary/>
+    element: <ErrorBoundary />,
   },
   {
-    path: '*',
-    element: <NotFoundPage/>
-  }
+    path: "*",
+    element: <NotFoundPage />,
+  },
 ]);
 
 function App() {
