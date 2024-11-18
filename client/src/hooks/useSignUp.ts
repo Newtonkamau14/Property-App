@@ -19,9 +19,6 @@ export const useSignUp = () => {
           email,
           password,
         },
-        {
-          withCredentials: true,
-        }
       );
 
       if (response.status === 201) {
@@ -33,7 +30,6 @@ export const useSignUp = () => {
       setLoading(false);
       if (axios.isAxiosError(error)) {
         const message = error.response?.data?.message || "An error occurred";
-        console.log(error.response?.data)
         setError(message);
       } else {
         setError("An error occurred while signing up the user");

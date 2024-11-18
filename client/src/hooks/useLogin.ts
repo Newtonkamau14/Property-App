@@ -1,7 +1,7 @@
-import { useState } from "react";
+import axios from "axios";
 import { useAuthContext } from "./useAuthContext";
 import axiosInstance from "../api/axios";
-import axios from "axios";
+import { useState } from "react";
 
 export const useLogin = () => {
   const [error, setError] = useState<string | null>(null);
@@ -12,27 +12,29 @@ export const useLogin = () => {
     try {
       setIsLoading(true);
       setError(null);
-      const response = await axiosInstance.post("/api/user/login", {
-        email,
-        password,
-      },{
-        withCredentials: true
-      });
+
+      const response = await axiosInstance.post(
+        "/auth/admin/login",
+        { email, password },
+      );
 
       if (response.status === 200) {
-        //save user to local storage
+        // Save user to local storage
         localStorage.setItem("user", JSON.stringify(response.data));
 
-        //update the auth context
+        // Update the auth context
         dispatch({ type: "LOGIN", payload: response.data });
         setIsLoading(false);
       }
     } catch (error) {
+      setIsLoading(false);
+
       if (axios.isAxiosError(error)) {
-        setIsLoading(false);
+        // Handle Axios-specific errors
         const message = error.response?.data?.message || "An error occurred";
         setError(message);
       } else {
+        // Handle unexpected errors
         setError("An error occurred while logging in the user");
       }
     }
