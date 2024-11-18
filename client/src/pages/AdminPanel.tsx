@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "../api/axios";
 import { IProperty } from "../models/property";
 import Loading from "../components/Loading";
+import SearchBar from "../components/SearchBar";
 
 function AdminPanel() {
   const [properties, setProperties] = useState<IProperty[]>([]);
@@ -38,22 +39,8 @@ function AdminPanel() {
   return (
     <>
       <h1>Dashboard</h1>
-      <form
-        className="d-flex my-2"
-        action="/admin/search-property"
-        method="get"
-      >
-        <input
-          className="form-control me-2"
-          type="search"
-          placeholder="Search Property"
-          aria-label="Search"
-          name="search"
-        />
-        <button className="btn btn-outline-success" type="submit">
-          Search
-        </button>
-      </form>
+
+      <SearchBar />
 
       <h3 className="text-primary text-center">All Properties</h3>
       <div className="table-responsive">
