@@ -3,8 +3,8 @@ import { Express } from "express";
 declare global {
   namespace Express {
     interface User {
-      role: string;
-      user_id: string
+      user_id: string;
+      email: string;
     }
     interface Request {
       user?: User;
@@ -16,6 +16,7 @@ declare global {
       DBUSER: string;
       PASSWORD: string;
       SESSION_SECRET: string;
+      REACT_APP_URL: string
     }
   }
 }
