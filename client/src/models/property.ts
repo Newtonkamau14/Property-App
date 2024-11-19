@@ -1,19 +1,12 @@
-type Coordinates = {
-  type: string;
-  coordinates: number[];
-};
-
 export type IProperty = {
-  property_id: string;
   property_name: string;
   property_type: string;
   property_location: string;
-  property_price: number;
-  property_image: string;
-  property_purpose: boolean;
-  geometry: Coordinates;
-  createdAt: Date;
-  updatedAt: Date;
+  property_price: string;
+  property_image: Buffer;
+  property_purpose: string;
+  longitude: string;
+  latitude: string
 };
 
 export type PropertyProps = {
