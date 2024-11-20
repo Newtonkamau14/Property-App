@@ -20,6 +20,7 @@ import AdminBedroom from "./pages/AdminBedroom";
 import AddProperty from "./pages/AddProperty";
 import ProtectedRoute from "./components/ProtectedRoute";
 import PublicRoute from "./components/PublicRoute";
+import EditProperty from "./pages/EditProperty";
 
 const router = createBrowserRouter([
   {
@@ -99,7 +100,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/admin/editproperty/:property_id",
-        element: "",
+        element: (
+          <ProtectedRoute>
+            <EditProperty />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "/admin/search-property",
