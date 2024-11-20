@@ -248,7 +248,7 @@ const editProperty: RequestHandler = async (req: Request, res: Response) => {
     }
 
     await existingProperty.save();
-    return res.status(200).redirect("/admin");
+    return res.status(200).json({ message: "Property updated successfully" });;
   } catch (error) {
     console.error(error);
     return res.status(500).json({ message: "Internal server error" });
@@ -335,6 +335,21 @@ const searchProperty: RequestHandler = async (req: Request, res: Response) => {
   }
 };
 
+const getPropertyById = async (req: Request, res: Response) => {
+  const { property_id } = req.params;
+  try {
+    const property = await Property.findByPk(property_id);
+
+    if (!property) {
+      return res.status(404).json({ message: "No property was found" });
+    }
+
+    return res.status(200).json(property);
+  } catch (error) {
+    return res.status(500).json({ message: "Internal server error" });
+  }
+};
+
 export default {
   getAdminPanel,
   getBedroomAdmin,
@@ -344,4 +359,5 @@ export default {
   editProperty,
   deleteProperty,
   searchProperty,
+  getPropertyById
 };

@@ -21,4 +21,6 @@ router
   .route("/deleteproperty/:property_id")
   .delete(adminController.deleteProperty);
 
+router.route("/property/:property_id").get(adminController.getPropertyById);
+
 export default router;
