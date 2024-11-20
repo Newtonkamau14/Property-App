@@ -1,4 +1,4 @@
-import { PropertyProps } from "../models/property";
+import { PropertyProps } from "../types/property";
 
 function Property({ property }: PropertyProps) {
   return (
@@ -14,7 +14,7 @@ function Property({ property }: PropertyProps) {
           <p className="card-text">{property.property_type}</p>
           <p className="card-house-location">{property.property_location}</p>
           <p className="card-house-price">
-            Ksh {property.property_price.toLocaleString("en-UK")}
+            Ksh {property.property_price.toLocaleString()}
           </p>
         </div>
       </a>

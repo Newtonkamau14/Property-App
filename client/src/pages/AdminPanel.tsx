@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "../api/axios";
-import { IProperty } from "../models/property";
+import { IProperty } from "../types/property";
 import Loading from "../components/Loading";
 import SearchBar from "../components/SearchBar";
 
@@ -61,7 +61,7 @@ function AdminPanel() {
                 <tr>
                   <td>{property.property_name}</td>
                   <td>{property.property_location}</td>
-                  <td>{property.property_price.toLocaleString("en-UK")}</td>
+                  <td>{property.property_price.toLocaleString()}</td>
                   <td>{property.property_type}</td>
                   <td>{property.property_purpose}</td>
                 </tr>

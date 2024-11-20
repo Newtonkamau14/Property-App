@@ -1,5 +1,5 @@
 import React, { createContext, ReactNode, useReducer } from "react";
-import { IProperty } from "../models/property";
+import { IProperty } from "../types/property";
 
 interface PropertyState {
   properties: IProperty[] | null;

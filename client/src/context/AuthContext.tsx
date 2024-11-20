@@ -1,5 +1,5 @@
 import React, { createContext, ReactNode, useEffect, useReducer } from "react";
-import { IUser } from "../models/user";
+import { IUser } from "../types/user";
 
 type AuthState = {
   user: IUser | null;

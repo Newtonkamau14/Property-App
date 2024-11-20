@@ -1,4 +1,4 @@
-import { PropertyProps } from "../models/property";
+import { PropertyProps } from "../types/property";
 import axiosInstance from "../api/axios";
 import axios from "axios";
 import { Link } from "react-router-dom";

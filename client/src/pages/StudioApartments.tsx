@@ -1,7 +1,7 @@
 import Property from "../components/Property";
 import axios from "../api/axios";
 import { useEffect, useState } from "react";
-import { IProperty } from "../models/property";
+import { IProperty } from "../types/property";
 import Loading from "../components/Loading";
 
 function StudioApartments() {

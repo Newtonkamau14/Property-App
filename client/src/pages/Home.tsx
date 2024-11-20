@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { IProperty } from "../models/property";
+import { IProperty } from "../types/property";
 import Banner from "../components/Banner";
 import axiosInstance from "../api/axios";
 import Property from "../components/Property";

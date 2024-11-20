@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "../api/axios";
-import { IProperty } from "../models/property";
+import { IProperty } from "../types/property";
 import Loading from "../components/Loading";
 import Table from "../components/Table";
 

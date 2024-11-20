@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { IProperty } from "../models/property";
+import { IProperty } from "../types/property";
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";

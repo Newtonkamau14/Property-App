@@ -1,7 +1,7 @@
 import { useState } from "react";
 import axiosInstance from "../api/axios";
 import axios from "axios";
-import { IProperty } from "../models/property";
+import { IProperty } from "../types/property";
 
 function SearchBar() {
     const [loading, setLoading] = useState(false);
