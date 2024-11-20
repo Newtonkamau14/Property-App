@@ -122,7 +122,7 @@ passport.use(
               }
 
               const newAdmin = new User({
-                username: username,
+                username: req.body.username,
                 email: req.body.email,
                 role: "ADMIN",
                 password: hash,
@@ -147,21 +147,17 @@ passport.use(
 );
 
 //serialize user
-passport.serializeUser(function (user, done) {
-  done(null, user.user_id);
+passport.serializeUser((user, done) => {
+  done(null, user.user_id); // Ensure user_id is available
 });
 
-
-
-//deserialize user
-passport.deserializeUser(async function (user_id:string, done) {
-  const user = await User.findByPk(user_id);
-
-  if (!user) {
-    done(null, false);
+passport.deserializeUser(async (user_id: string, done) => {
+  try {
+    const user = await User.findByPk(user_id); // Verify User.findByPk works
+    done(null, user || false); // Pass `false` if no user is found
+  } catch (err) {
+    done(err, null);
   }
-
-  done(null, user);
 });
 
 export { passport };
