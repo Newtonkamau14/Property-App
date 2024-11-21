@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import axiosInstance from "../api/axios";
 import { IProperty } from "../types/property";
 import Loading from "../components/Loading";
+import PageTitle from "../components/PageTitle";
 
 function EditProperty() {
   const { property_id } = useParams();
@@ -82,6 +83,7 @@ function EditProperty() {
   }
   return (
     <>
+    <PageTitle title="Edit Property"/>
       <h1>Edit Property</h1>
       <div className="d-flex align-items-center justify-content-center">
         <form

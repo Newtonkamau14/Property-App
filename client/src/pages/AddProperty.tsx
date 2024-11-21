@@ -4,6 +4,7 @@ import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import axios from "axios";
 import axiosInstance from "../api/axios";
 import { usePropertiesContext } from "../hooks/usePropertiesContext";
+import PageTitle from "../components/PageTitle";
 
 function AddProperty() {
   const { dispatch } = usePropertiesContext();
@@ -53,7 +54,9 @@ function AddProperty() {
     event.preventDefault();
 
     const formData = new FormData();
-    const fileInput = document.getElementById("propertyimage") as HTMLInputElement;
+    const fileInput = document.getElementById(
+      "propertyimage"
+    ) as HTMLInputElement;
     const file = fileInput?.files?.[0];
 
     formData.append("property_name", property_name);
@@ -97,6 +100,8 @@ function AddProperty() {
   };
 
   return (
+    <>
+    <PageTitle title="Add Property"/>
     <div>
       {error && (
         <div className="alert alert-danger" role="alert">
@@ -248,6 +253,8 @@ function AddProperty() {
         </MapContainer>
       </div>
     </div>
+    </>
+
   );
 }
 

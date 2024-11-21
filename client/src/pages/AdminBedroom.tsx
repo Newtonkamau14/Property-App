@@ -3,6 +3,7 @@ import axios from "../api/axios";
 import { IProperty } from "../types/property";
 import Loading from "../components/Loading";
 import Table from "../components/Table";
+import PageTitle from "../components/PageTitle";
 
 function AdminBedroom() {
   const [bedrooms, setBedrooms] = useState<IProperty[]>([]);
@@ -39,6 +40,7 @@ function AdminBedroom() {
 
   return (
     <>
+    <PageTitle title="1,2,3 Bedrooms"/>
       {bedrooms.length > 0 ? (
         bedrooms.map((property) => (
           <Table key={property.property_id} property={property} />

@@ -3,6 +3,7 @@ import axios from "../api/axios";
 import { IProperty } from "../types/property";
 import Loading from "../components/Loading";
 import Table from "../components/Table";
+import PageTitle from "../components/PageTitle";
 
 function AdminSingleRoom() {
   const [singlerms, setSingleRms] = useState<IProperty[]>([]);
@@ -38,6 +39,7 @@ function AdminSingleRoom() {
   }
   return (
     <>
+      <PageTitle title="Single Rooms"/>
       {singlerms.length > 0 ? (
         singlerms.map((property) => (
           <Table key={property.property_id} property={property} />

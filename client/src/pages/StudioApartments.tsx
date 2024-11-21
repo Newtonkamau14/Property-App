@@ -3,6 +3,7 @@ import axios from "../api/axios";
 import { useEffect, useState } from "react";
 import { IProperty } from "../types/property";
 import Loading from "../components/Loading";
+import PageTitle from "../components/PageTitle";
 
 function StudioApartments() {
   const [loading, setLoading] = useState(false);
@@ -38,6 +39,8 @@ function StudioApartments() {
     );
   }
   return (
+    <>
+    <PageTitle title="Studio Apartments"/>
     <div className="main-container">
       <h3 className="house-type-title">Studio Apartments</h3>
       <div className="row row-cols-3 row-cols-md-4 g-4">
@@ -52,6 +55,7 @@ function StudioApartments() {
         )}
       </div>
     </div>
+    </>
   );
 }
 

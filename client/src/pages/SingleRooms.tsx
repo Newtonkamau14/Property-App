@@ -3,6 +3,7 @@ import axios from "../api/axios";
 import { useEffect, useState } from "react";
 import { IProperty } from "../types/property";
 import Loading from "../components/Loading";
+import PageTitle from "../components/PageTitle";
 
 function SingleRooms() {
   const [loading, setLoading] = useState(false);
@@ -37,20 +38,23 @@ function SingleRooms() {
     );
   }
   return (
-    <div className="main-container">
-      <h3 className="house-type-title">Single Rooms</h3>
-      <div className="row row-cols-3 row-cols-md-4 g-4">
-        {singlerms.length > 0 ? (
-          singlerms.map((property) => (
-            <div key={property.property_id} className="col">
-              <Property property={property} />
-            </div>
-          ))
-        ) : (
-          <h3>No single rooms available</h3>
-        )}
+    <>
+      <PageTitle title="Single Rooms" />
+      <div className="main-container">
+        <h3 className="house-type-title">Single Rooms</h3>
+        <div className="row row-cols-3 row-cols-md-4 g-4">
+          {singlerms.length > 0 ? (
+            singlerms.map((property) => (
+              <div key={property.property_id} className="col">
+                <Property property={property} />
+              </div>
+            ))
+          ) : (
+            <h3>No single rooms available</h3>
+          )}
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 

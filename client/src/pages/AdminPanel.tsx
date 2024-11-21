@@ -4,6 +4,7 @@ import { IProperty } from "../types/property";
 import Loading from "../components/Loading";
 import SearchBar from "../components/SearchBar";
 import axios from "axios";
+import PageTitle from "../components/PageTitle";
 
 function AdminPanel() {
   const [properties, setProperties] = useState<IProperty[]>([]);
@@ -50,6 +51,7 @@ function AdminPanel() {
   }
   return (
     <>
+      <PageTitle title="Admin Panel"/>
       <h1>Dashboard</h1>
 
       <SearchBar handleSearch={handleSearch} />

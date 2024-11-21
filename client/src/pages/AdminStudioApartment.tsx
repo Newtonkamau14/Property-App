@@ -3,6 +3,7 @@ import axios from "../api/axios";
 import { IProperty } from "../types/property";
 import Loading from "../components/Loading";
 import Table from "../components/Table";
+import PageTitle from "../components/PageTitle";
 
 function AdminStudioApartment() {
   const [studioapt, setStudioApt] = useState<IProperty[]>([]);
@@ -39,6 +40,7 @@ function AdminStudioApartment() {
 
   return (
     <>
+    <PageTitle title="Studio Apartments"/>
       {studioapt.length > 0 ? (
         studioapt.map((property) => (
           <Table key={property.property_id} property={property} />

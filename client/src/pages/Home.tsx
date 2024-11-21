@@ -6,6 +6,7 @@ import Property from "../components/Property";
 import Loading from "../components/Loading";
 import { usePropertiesContext } from "../hooks/usePropertiesContext";
 import axios from "axios";
+import PageTitle from "../components/PageTitle";
 
 interface PropertyData {
   randproperties: IProperty[];
@@ -91,21 +92,28 @@ function Home() {
   );
 
   return (
-    <div className="main-container">
-      <Banner />
-      {renderPropertySection(
-        "Promoted",
-        data.randproperties,
-        "No promoted properties"
-      )}
-      {renderPropertySection(
-        "Studio Apartments",
-        data.studioapt,
-        "No studio apartments"
-      )}
-      {renderPropertySection("Single Rooms", data.singlerms, "No single rooms")}
-      {renderPropertySection("Bedrooms", data.bedrooms, "No bedrooms")}
-    </div>
+    <>
+      <PageTitle title="Home" />
+      <div className="main-container">
+        <Banner />
+        {renderPropertySection(
+          "Promoted",
+          data.randproperties,
+          "No promoted properties"
+        )}
+        {renderPropertySection(
+          "Studio Apartments",
+          data.studioapt,
+          "No studio apartments"
+        )}
+        {renderPropertySection(
+          "Single Rooms",
+          data.singlerms,
+          "No single rooms"
+        )}
+        {renderPropertySection("Bedrooms", data.bedrooms, "No bedrooms")}
+      </div>
+    </>
   );
 }
 
