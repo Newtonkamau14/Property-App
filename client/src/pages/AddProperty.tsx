@@ -1,7 +1,12 @@
 import { useEffect, useState } from "react";
 import "leaflet/dist/leaflet.css";
 import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
+import axios from "axios";
+import axiosInstance from "../api/axios";
+import { usePropertiesContext } from "../hooks/usePropertiesContext";
+
 function AddProperty() {
+  const { dispatch } = usePropertiesContext();
   const [position, setPosition] = useState<{ lat: number; lng: number }>({
     lat: -1.2802582028021525,
     lng: 36.82516939299642,
@@ -13,6 +18,7 @@ function AddProperty() {
   const [property_purpose, setproperty_purpose] = useState<string>("");
   const [latitude, setlatitude] = useState<string>(position.lat.toString());
   const [longitude, setlongitude] = useState<string>(position.lng.toString());
+  const [error, setError] = useState<string | null>(null);
 
   // Custom hook to handle map events and update position
   function MapEventHandler({
@@ -43,9 +49,65 @@ function AddProperty() {
     setlongitude(position.lng.toString());
   }, [position]);
 
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    const formData = new FormData();
+    const fileInput = document.getElementById("propertyimage") as HTMLInputElement;
+    const file = fileInput?.files?.[0];
+
+    formData.append("property_name", property_name);
+    formData.append("property_location", property_location);
+    formData.append("property_price", property_price);
+    if (file) formData.append("property_image", file);
+    formData.append("property_type", property_type);
+    formData.append("property_purpose", property_purpose);
+    formData.append("longitude", longitude);
+    formData.append("latitude", latitude);
+
+    try {
+      const response = await axiosInstance.post(
+        "/admin/addproperty",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+      if (response.status === 201) {
+        setproperty_name("");
+        setproperty_location("");
+        setproperty_price("");
+        setproperty_type("");
+        setproperty_purpose("");
+        setlongitude("");
+        setlatitude("");
+        dispatch({ type: "CREATE_PROPERTY", payload: response.data });
+      }
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        const message = error.response?.data?.message || "An error occurred";
+        setError(message);
+      } else {
+        setError("An error occurred while adding the workout");
+      }
+    }
+  };
+
   return (
     <div>
-      <form className="border rounded p-3 col-6" encType="multipart/form-data">
+      {error && (
+        <div className="alert alert-danger" role="alert">
+          {error}
+        </div>
+      )}
+      <form
+        className="border rounded p-3 col-6"
+        encType="multipart/form-data"
+        onSubmit={handleSubmit}
+      >
         <div className="form-group my-4">
           <label htmlFor="propertyname">Property Name</label>
           <input
@@ -152,7 +214,10 @@ function AddProperty() {
           Add Property
         </button>
       </form>
-      <div className="map" style={{ marginTop: "1.5rem", marginBottom: "1rem" }}>
+      <div
+        className="map"
+        style={{ marginTop: "1.5rem", marginBottom: "1rem" }}
+      >
         <h3>Select the coordinates of the property by dragging the marker</h3>
         <MapContainer
           center={[position.lat, position.lng]}
