@@ -1,36 +1,30 @@
-import { useState } from "react";
-import axiosInstance from "../api/axios";
-import axios from "axios";
-import { IProperty } from "../types/property";
+import { useSearchParams } from "react-router-dom";
+import { FormEvent, useState } from "react";
 
-function SearchBar() {
-    const [loading, setLoading] = useState(false);
-    const [properties, setProperties] = useState<IProperty[]>([]);
-    const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const handleSearch = async () => {
-    try {
-     const response = await axiosInstance.get("/admin/search-property");
-            setProperties(response.data.properties);
+type SearchBarProps = {
+  handleSearch: (query: string) => void;
+}
 
-    }catch (error) {
-        if (axios.isAxiosError(error)) {
-          const message = error.response?.data?.message || "An error occurred";
-          setErrorMessage(message);
-        } else {
-          setErrorMessage("An unknown error occurred");
-        }
-      } finally {
-        setLoading(false);
-      }
+function SearchBar({ handleSearch }: SearchBarProps) {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchQuery, setSearchQuery] = useState(searchParams.get("search") || "");
+
+  const onSubmit = (e: FormEvent) => {
+    e.preventDefault(); 
+    setSearchParams({ search: searchQuery });
+    handleSearch(searchQuery);
   };
+
   return (
-    <form className="d-flex my-2" onSubmit={handleSearch}>
+    <form className="d-flex my-2" onSubmit={onSubmit}>
       <input
         className="form-control me-2"
         type="search"
         placeholder="Search Property"
         aria-label="Search"
         name="search"
+        value={searchQuery}
+        onChange={(e) => setSearchQuery(e.target.value)} 
       />
       <button className="btn btn-outline-success" type="submit">
         Search

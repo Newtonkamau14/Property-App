@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
-import axios from "../api/axios";
+import axiosInstance from "../api/axios";
 import { IProperty } from "../types/property";
 import Loading from "../components/Loading";
 import SearchBar from "../components/SearchBar";
+import axios from "axios";
 
 function AdminPanel() {
   const [properties, setProperties] = useState<IProperty[]>([]);
@@ -10,20 +11,31 @@ function AdminPanel() {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   useEffect(() => {
-    setLoading(true);
-    axios
-      .get("/admin")
-      .then((response) => {
-        setProperties(response.data.properties);
-      })
-      .catch((error) => {
-        const message = error.response?.data?.message || "An error occurred";
-        setErrorMessage(message);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
+    fetchProperties();
   }, []);
+
+  const fetchProperties = async (query: string = "") => {
+    setLoading(true);
+    setErrorMessage(null); // Clear any previous error
+    try {
+      const endpoint = query
+        ? `/admin/search-property?search=${query}`
+        : "/admin";
+      const response = await axiosInstance.get(endpoint);
+      setProperties(response.data.properties);
+    } catch (error) {
+      const message = axios.isAxiosError(error)
+        ? error.response?.data?.message || "An error occurred"
+        : "An unknown error occurred";
+      setErrorMessage(message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleSearch = (query: string) => {
+    fetchProperties(query);
+  };
 
   if (loading) {
     return <Loading />;
@@ -40,7 +52,7 @@ function AdminPanel() {
     <>
       <h1>Dashboard</h1>
 
-      <SearchBar />
+      <SearchBar handleSearch={handleSearch} />
 
       <h3 className="text-primary text-center">All Properties</h3>
       <div className="table-responsive">
